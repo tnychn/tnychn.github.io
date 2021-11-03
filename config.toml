@@ -1,0 +1,70 @@
+baseURL = "http://tnychn.github.io"
+languageCode = "en-hk"
+title = "tnychn"
+paginate = 5
+paginatePath = ""
+enableEmoji = true
+enableGitInfo = true
+disqusShortname = "tnychn"
+
+[frontmatter]
+    date = ["date"]
+    lastmod = ["lastmod", ":git", "date", "publishDate"]
+    publishDate = ["publishDate", "date"]
+    expiryDate = ["expiryDate"]
+
+[taxonomies]
+  tag = "tags"
+
+[permalinks]
+  posts = "/posts/:year:month:day~:filename"
+
+[markup]
+    [markup.highlight]
+        style = "native"
+        codeFences = true
+        guessSyntax = true
+        noClasses = true
+        lineNos = true
+        lineNumbersInTable = true
+    [markup.tableOfContents]
+        endLevel = 4
+        startLevel = 2
+        ordered = false
+
+[params]
+    author = "Tony Chan"
+    subtitle = "The /dev/stdout for my random thoughts."
+    description = """
+### Welcome to my site!
+
+Here you can find all my blog posts about programming and stuff.
+
+I hope you enjoy what I find interesting enough to write. 
+    """
+    repoURL = "https://github.com/tnychn/tnychn.github.io"
+    cfToken = "c7dda5e79c594043b9232c2ca1a86ebb"
+    [[params.socials]]
+        type = "github"
+        url = "https://github.com/tnychn"
+    [[params.socials]]
+        type = "mail"
+        url = "mailto:tonychan2342@gmail.com"
+
+[menu]
+    [[menu.main]]
+        name = "HOME"
+        url = "/"
+        weight = 1
+    [[menu.main]]
+        name = "POSTS"
+        url = "/posts"
+        weight = 2
+    [[menu.main]]
+        name = "TAGS"
+        url = "/tags"
+        weight = 3
+    [[menu.main]]
+        name = "ABOUT"
+        url = "/about"
+        weight = 4

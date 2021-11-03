@@ -1,0 +1,21 @@
+<section>
+    <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+    <p>
+        <label>
+            <span>{{ .Date.Format "2 Jan 2006" }}</span>
+            <span>· {{ .ReadingTime }} min read</span>
+            <span>· {{ .WordCount }} words</span>
+        </label>
+        <br>
+        {{ if .GetTerms "tags" }}
+        <label>
+            <span>Tags: </span>
+            {{ range .GetTerms "tags" }}
+            <span>#<a href="{{ .RelPermalink }}">{{ .Title }}</a></span>
+            {{ end }}
+        </label>
+        {{ end }}
+    </p>
+    <p>{{ .Description }}</p>
+    <span><a href="{{ .RelPermalink }}">read more...</a></span>
+</section>

@@ -1,0 +1,12 @@
+<footer>
+    <p>
+        <span><i data-feather="zap"></i> Powered by <a href="https://gohugo.io">Hugo</a></span>
+        <span> · Copyright {{ now.Format "2006" }} © {{ .Site.Params.author }}</span>
+    </p>
+    <p>
+        {{ range .Site.Params.socials }}
+        <span><a href="{{ .url }}"><i data-feather="{{ .type }}"></i></a></span>
+        {{ end }}
+        <span>· (<a href="{{ .Site.Params.repoURL }}">source</a>)</span>
+    </p>
+</footer>

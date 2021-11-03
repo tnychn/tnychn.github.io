@@ -1,0 +1,17 @@
+{{ define "main" }}
+<main>
+    <h1>Tags</h1>
+    {{ if .Site.Taxonomies.tags }}
+    <p id="tags">
+        {{ $total := len .Site.RegularPages }}
+        {{ range .Site.Taxonomies.tags.Alphabetical }}
+        <span>
+            {{ $size := add 0.1 (mul 5 (div (float .Count) $total)) }}
+            <a href="{{ .Page.RelPermalink }}" style="font-size: {{ $size }}rem;">{{ .Page.Title }}</a>
+            <sub>{{ .Count }}</sub>
+        </span>
+        {{ end }}
+    </p>
+    {{ else }}{{ partial "list/nothing.html" . }}{{ end }}
+</main>
+{{ end }}
