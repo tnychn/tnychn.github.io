@@ -52,7 +52,7 @@ h3 {
 }
 
 h4, h5, h6 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-block-start: 1.33em;
 }
 
@@ -124,7 +124,7 @@ figcaption {
 
 code {
     color: var(--primary-color);
-    padding: 1px 5px;
+    padding: 0 5px;
     border-radius: 5px;
     border: 1px dotted var(--sub-color);
     font-size: 0.85rem;
@@ -156,6 +156,7 @@ ul>li::before {
 table {
     border-spacing: 0;
     border-collapse: collapse;
+    width: 100%;
 }
 
 table th {
@@ -358,6 +359,7 @@ body>footer {
 
 .highlight pre {
     margin: 0.5em 0;
+    margin-right: .5em;
 }
 
 .highlight pre code[class*="language-"]::before {
@@ -371,15 +373,27 @@ body>footer {
     padding: 0.1em 0.5em;
     position: absolute;
     border-radius: 5px;
+    opacity: 1;
+    transition: opacity 0.25s ease-out;
 }
 
-.highlight pre code[class="language-js"]::before {
+.highlight:hover pre code[class*="language-"]:before {
+    opacity: 0;
+}
+
+.highlight pre code[class="language-html"]::before {
+    content: "HTML";
+    color: white;
+    background-color: #e44d26;
+}
+
+.highlight pre code[class="language-javascript"]::before {
     content: "JavaScript";
     color: black;
     background-color: #f7df1e;
 }
 
-.highlight pre code[class*="language-py"]::before {
+.highlight pre code[class*="language-python"]::before {
     content: "Python";
     font-weight: bold;
     color: yellow;
