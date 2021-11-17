@@ -10,8 +10,6 @@ tags: ["ctf", "hkcert21", "scratch"]
 
 > **This post is part of the [HKCERT 2021 CTF series](/tags/hkcert21).**
 
----
-
 > **This writeup is written by one of my teammates.**
 
 ---
@@ -28,6 +26,8 @@ tags: ["ctf", "hkcert21", "scratch"]
 >
 > https://scratch.mit.edu/projects/596813541/
 
+---
+
 First, we need to win the bot.
 
 {{< figure src="1.png" width=400 >}}
@@ -38,4 +38,4 @@ Then, choose title and there was a yellow note. After dragging down the note, we
 
 One of the blocks has `result = 03vx{_ihq0xhh7svtx}t{sv180x{r`. Inserting this as the answer, we noticed the variable result on the left bar became `gjbdqs109gd00n}b_dr_q}bhogdq{` which is not the same as the result in the code.
 
-Then inserting `hkcert21{ ` as the answer and found out the variable result became `03vx{_ihq`. After some matching and guessing work, we were able to get the flag `hkcert21{he11o_caesar_cipher}`.
+Then inserting `hkcert21{` as the answer and found out the variable result became `03vx{_ihq`. After some matching and guessing work, we were able to get the flag `hkcert21{he11o_caesar_cipher}`.

@@ -22,13 +22,13 @@ tags: ["ctf", "hkcert21", "web", "php"]
 
 > If you can solve Rickroll in 2020, you will be able to solve it. Probably.
 >
-> 本題所使用的 PHP 版本為 8.0.12。
->
 > The PHP version used for the challenge is 8.0.12.
 >
 > http://chalf.hkcert21.pwnable.hk:28156/
 
 {{< figure src="1.png" width=300 >}}
+
+---
 
 ## Analysis
 
@@ -107,49 +107,35 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 
 The procedure of this login page is very typical, getting the inputs from an HTML form and then sending a HTTP POST request to server with the credentials as the payload. But there are some special conditions required for the credentials in order to log into the page. If the credentials do not pass the criterions, an error message is shown on the HTML.
 
- 1.  **Line 14:** both the lengths of username and password must not exceed 24 characters
-
+1. **Line 14:** both the lengths of username and password must not exceed 24 characters
 {{< highlight php "linenostart=14" >}}
 if ((strlen($_POST["username"]) > 24) or strlen($_POST["password"]) > 24)
 {{< / highlight >}}
-
- 2.  **Line 19 & Line 23:** both username and password must not be empty
-
+2. **Line 19 & Line 23:** both username and password must not be empty
 {{< highlight php "linenostart=19" >}}
 if(empty(trim($_POST["username"])))
 {{< / highlight >}}
 {{< highlight php "linenostart=23" >}}
 if(empty(trim($_POST["password"])))
 {{< / highlight >}}
-
- 3.  **Line 27:** both username and password must be alphanumeric
-
+3. **Line 27:** both username and password must be alphanumeric
 {{< highlight php "linenostart=27" >}}
 if (!ctype_alnum(trim($_POST["password"])) or !ctype_alnum(trim($_POST["username"])))
 {{< / highlight >}}
-
- 4.  **Line 46:** `username === "hkcert"` (triple equality: exact equal, same type and same value)
-
+4. **Line 46:** `username === "hkcert"` (triple equality: exact equal, same type and same value)
 {{< highlight php "linenostart=46" >}}
 if ($username === 'hkcert')
 {{< / highlight >}}
-
- 5.  **Line 47:**  `the md5 hash of password == 0` (mind the double equality used here, we will talk about this later)
-
+5. **Line 47:**  `the md5 hash of password == 0` (mind the double equality used here, we will talk about this later)
 {{< highlight php "linenostart=47" >}}
 (hash('md5', $password) == 0)
 {{< / highlight >}}
-
- 6.  **Line 48:** password must start with a "hkcert" prefix
-
+6. **Line 48:** password must start with a "hkcert" prefix
 {{< highlight php "linenostart=48" >}}
 (substr($password,0,strlen('hkcert')) === 'hkcert')
 {{< / highlight >}}
-
- 7.  **Line 49:** the UNIX `grep` command is used here to search if the exact same password already exists in the `./used_pw.txt` file
-
-     This means we cannot reuse the passwords previously used by other teams that solved this challenge.
-
+7. **Line 49:** the UNIX `grep` command is used here to search if the exact same password already exists in the `./used_pw.txt` file;
+This means we cannot reuse the passwords previously used by other teams that solved this challenge.
 {{< highlight php "linenostart=49" >}}
 if (!exec('grep '.escapeshellarg($password).' ./used_pw.txt'))
 {{< / highlight >}}
