@@ -1,6 +1,6 @@
 <section>
     <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-    <p>
+    <p style="margin-block: 0;">
         <label>
             <span>{{ .Date.Format "2 Jan 2006" }}</span>
             <span>· {{ .ReadingTime }} min read</span>
@@ -16,6 +16,6 @@
         </label>
         {{ end }}
     </p>
-    <p>{{ .Description }}</p>
+    <p style="margin-block: 0.25em;">{{ .Description }}</p>
     <span><a href="{{ .RelPermalink }}">read more...</a></span>
 </section>
