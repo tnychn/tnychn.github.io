@@ -2,7 +2,6 @@
 title: "HKCERT CTF 2021: 純孩兒 BabyXSS"
 description: ""
 date: 2021-11-16T02:00:32+08:00
-lastmod: 2021-11-16T02:00:32+08:00
 math: false
 draft: false
 tags: ["ctf", "hkcert21", "web", "xss"]

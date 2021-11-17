@@ -9,9 +9,9 @@ disqusShortname = "tnychn"
 
 [frontmatter]
     date = ["date"]
-    lastmod = ["lastmod", ":git", "date", "publishDate"]
-    publishDate = ["publishDate", "date"]
-    expiryDate = ["expiryDate"]
+    lastmod = [":git", "date"]
+    publishDate = []
+    expiryDate = []
 
 [taxonomies]
   tag = "tags"
