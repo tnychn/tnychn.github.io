@@ -472,6 +472,10 @@ body>footer {
     border: none;
 }
 
+.utterances {
+    max-width: 100%;
+}
+
 /* #TableOfContents {
     font-weight: bold;
     font-size: 14px;
