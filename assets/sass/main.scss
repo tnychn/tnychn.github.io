@@ -193,6 +193,7 @@ header {
 }
 
 footer {
+    margin-top: 5rem;
     font-size: 0.75em;
     background-color: lighten($color-bg, 2%);
 }
@@ -329,9 +330,10 @@ ol {
         }
     }
     .post-footer {
+        padding: 0;
+        margin-bottom: 3rem;
         font-size: 0.9em;
         font-family: monospace;
-        margin-bottom: 2rem;
         background-color: $color-bg;
         .post-footer__tags {
             margin-bottom: 1rem;
