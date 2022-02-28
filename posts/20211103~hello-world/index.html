@@ -1,0 +1,100 @@
+<!doctype html><html lang=en><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name=keywords content="[]">
+<meta name=description content="Let the blog begin: why and how I started blogging.">
+<meta property="og:title" content="Hello World">
+<meta property="og:description" content="Let the blog begin: why and how I started blogging.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://tnychn.github.io/posts/20211103~hello-world/"><meta property="article:section" content="posts">
+<meta property="article:modified_time" content="2021-11-07T03:10:47+08:00">
+<title>Hello World | tnychn</title>
+<link rel=icon type=image/png href=/favicon.png>
+<link rel=stylesheet type=text/css href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css>
+<link rel=stylesheet type=text/css href=/sass/main.min.50c19a993576768754300b5360c7c473a46cc42aca6cd45c8f397c874f1ae9ef.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap">
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap">
+<link rel=stylesheet crossorigin=anonymous href=https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css>
+<script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "c7dda5e79c594043b9232c2ca1a86ebb"}'></script>
+</head>
+<body><header>
+<div class="header container">
+<div class=header__left>
+<h1><a href=http://tnychn.github.io>TNYCHN</a></h1>
+<span><em>The /dev/stdout for my programming thoughts.</em></span>
+</div>
+<div class=header__right>
+<nav class=header__right__socials>
+<div><a href=https://github.com/tnychn target=_blank><i class="bx bx-tada-hover bxl-github"></i></a></div>
+<div><a href=https://gitlab.com/tnychn target=_blank><i class="bx bx-tada-hover bxl-gitlab"></i></a></div>
+<div><a href=mailto:tnychn@pm.me target=_blank><i class="bx bx-tada-hover bx-mail-send"></i></a></div>
+</nav>
+<nav class=header__right__navbar>
+<div><a href=/about>About</a></div>
+<div><a href=/posts>Posts</a></div>
+<div><a href=/tags>Tags</a></div>
+</nav>
+</div>
+</div>
+</header>
+<main class=post>
+<h1 class=post-title>Hello World</h1>
+<header class=post-header>
+<div class=post-header__meta>
+<span>3 Nov 2021</span>
+<span>· 4 min read</span>
+<span>· 660 words</span>
+</div>
+<span>Let the blog begin: why and how I started blogging.</span>
+</header>
+<article><blockquote>
+<p>This is my first blog post ever!
+Please forgive my writing skills (english is not my first language).</p>
+</blockquote>
+<h2 id=welcome>Welcome!</h2>
+<p>🎉 <strong>Welcome to my site!</strong> I&rsquo;ve finally got this site working just as expected and reached a point where I was satisfied with the looks and feels of the final result. Though I realized I&rsquo;ve spent too much time on the styling rather than the content. So at last, I decided to make up my mind and settle on this design, and hopefully, it isn&rsquo;t too awful to look at.</p>
+<p>To be honest, I don&rsquo;t expect this site to have much traffic. People most probably won&rsquo;t give a shit to a random guy&rsquo;s writing about programming and other stuff. But then why did I want to start blogging and put so much time into creating this site in the first place? Perhaps it&rsquo;s because of my &ldquo;programmer instinct&rdquo;. I always strive for perfection, especially in programming-related stuff (though I admit this bad habit of mine has become too extravagant that it starts to affect my daily time management). But still, I want to make a proper record of what I&rsquo;ve learnt along the way by blogging, kind of like keeping a diary.</p>
+<p>So anyway, to mark the beginning of my blog, let&rsquo;s talk about the creation of this site&mldr;</p>
+<h2 id=choosing-an-ssg>Choosing an SSG</h2>
+<p>The first step to creating a static site is to choose a static site generator (SSG). I&rsquo;ve heard of <a href=https://www.gatsbyjs.com>Gatsby</a> and <a href=https://jekyllrb.com>Jekyll</a> before. But I wanted to keep my site simple and minimalist with as little JavaScript used as possible, not to mention I&rsquo;m much more proficient in Go than JavaScript and Ruby. So I chose <a href=https://gohugo.io>Hugo</a>, because it&rsquo;s said to be the world&rsquo;s fastest, and most importantly it&rsquo;s &ldquo;100% static&rdquo;, which means it uses the traditional way to generating pages, unlike Gatsby which uses GraphQL and React to fetch and render pages. This makes Gatsby unnecessarily bloated and overcomplicated as I believe most blogs won&rsquo;t need these features. On the other hand, Jekyll seems like an old-school choice to me (doesn&rsquo;t look as modern as Hugo). So now the best option left is Hugo, and I&rsquo;m pretty happy with it so far.</p>
+<h2 id=theming>Theming</h2>
+<p>The next and the most important step is to define how your site looks. I initially started out by looking at the <a href=https://athul.github.io/archie>Archie</a> theme and the <a href=https://www.takuzen.me/hugo-theme-cactus>Cactus</a> theme. But then I realised I don&rsquo;t like the feeling of being limited. Not that I&rsquo;m blaming the inflexibility of the themes, but I want full control of my own site. So instead of doing the tedious task of customizing others' themes, I decided to write my own unique theme that suits my taste (despite my lack of confidence in CSS styling). Although it seems much more tedious, the process is rewarding enough. I can feel the improvement in my HTML & CSS skills.</p>
+<p>I aimed to make a theme that allows readers to focus more on the content than the design of the site. I didn&rsquo;t use any CSS frameworks, just plain HTML & CSS. And the only JavaScript libraries I used are <a href=https://feathericons.com>Feather</a> (for the beautiful icons) and <a href=https://katex.org>KaTex</a> (for the math typesetting). Since I was inspired by the &ldquo;simple and geeky&rdquo; appearance of Archie and the rich functionalities of Cactus, you may see some of the similarities have been fused into my site&rsquo;s design.</p>
+<h2 id=whats-next>What&rsquo;s next?</h2>
+<p>Oh, can&rsquo;t believe you&rsquo;re still on this page! Thank you for reading all of my verbose bullshit.</p>
+<p>Some might be curious about how I set up and configure the site. That would be the content for another post.</p>
+<p>Most of my posts here in the future will be related to programming, which will include more code blocks and showcases.
+Also occasionally some writeups for future events such as CTFs.</p>
+<p>I will write in my free time. Please stay tuned if you enjoyed my content!</p>
+<blockquote>
+<p><strong>If you&rsquo;ve found something wrong, feel free to leave a comment below to correct me.</strong></p>
+</blockquote>
+</article>
+<footer class=post-footer>
+<div class=post-footer__tags>
+<i class="bx bxs-tag-alt"></i>
+<span><a href=/tags/meta/>meta</a></span>
+<span><a href=/tags/opinion/>opinion</a></span>
+<span><a href=/tags/web/>web</a></span>
+</div>
+<span><i class="bx bxs-time"></i> 2021-11-07 03:10:47</span>
+</footer>
+<div id=comments>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//tnychn.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+</main>
+<footer>
+<div class="footer container">
+<span>Copyright 2022 © Tony Chan</span>
+<span>Powered by <a href=https://gohugo.io>Hugo</a> with <a href=https://github.com/tnychn/tnychn.github.io>Custom Theme</a></span>
+</div>
+</footer>
+</body>
+</html>

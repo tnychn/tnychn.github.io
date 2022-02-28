@@ -1,0 +1,130 @@
+<!doctype html><html lang=en><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name=keywords content="[]">
+<meta name=description content>
+<meta property="og:title" content="HKCERT CTF 2021: 回到十二歲 Scratch Tic-Tac-Toe">
+<meta property="og:description" content="This post is part of the HKCERT 2021 CTF series.
+  This writeup is written by one of my teammates.
+     Name 回到十二歲 (Scratch Tic-Tac-Toe)     Tags misc   Points 200   Difficulty ★★☆☆☆   Solves 86 (total of all four divisions)   Release Date 2021-11-13 06:00:00     If you can beat me in the game I&rsquo;ll give you the flag!">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://tnychn.github.io/posts/20211116~hkcert21-scratch/"><meta property="article:section" content="posts">
+<meta property="article:modified_time" content="2021-11-17T20:29:30+08:00">
+<title>HKCERT CTF 2021: 回到十二歲 Scratch Tic-Tac-Toe | tnychn</title>
+<link rel=icon type=image/png href=/favicon.png>
+<link rel=stylesheet type=text/css href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css>
+<link rel=stylesheet type=text/css href=/sass/main.min.50c19a993576768754300b5360c7c473a46cc42aca6cd45c8f397c874f1ae9ef.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap">
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap">
+<link rel=stylesheet crossorigin=anonymous href=https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css>
+<script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "c7dda5e79c594043b9232c2ca1a86ebb"}'></script>
+</head>
+<body><header>
+<div class="header container">
+<div class=header__left>
+<h1><a href=http://tnychn.github.io>TNYCHN</a></h1>
+<span><em>The /dev/stdout for my programming thoughts.</em></span>
+</div>
+<div class=header__right>
+<nav class=header__right__socials>
+<div><a href=https://github.com/tnychn target=_blank><i class="bx bx-tada-hover bxl-github"></i></a></div>
+<div><a href=https://gitlab.com/tnychn target=_blank><i class="bx bx-tada-hover bxl-gitlab"></i></a></div>
+<div><a href=mailto:tnychn@pm.me target=_blank><i class="bx bx-tada-hover bx-mail-send"></i></a></div>
+</nav>
+<nav class=header__right__navbar>
+<div><a href=/about>About</a></div>
+<div><a href=/posts>Posts</a></div>
+<div><a href=/tags>Tags</a></div>
+</nav>
+</div>
+</div>
+</header>
+<main class=post>
+<h1 class=post-title>HKCERT CTF 2021: 回到十二歲 Scratch Tic-Tac-Toe</h1>
+<header class=post-header>
+<div class=post-header__meta>
+<span>16 Nov 2021</span>
+<span>· 1 min read</span>
+<span>· 144 words</span>
+</div>
+<span></span>
+</header>
+<article><blockquote>
+<p><strong>This post is part of the <a href=/tags/hkcert21>HKCERT 2021 CTF series</a>.</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>This writeup is written by one of my teammates.</strong></p>
+</blockquote>
+<hr>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>Name</th>
+<th>回到十二歲 (Scratch Tic-Tac-Toe)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>Tags</td>
+<td>misc</td>
+</tr>
+<tr>
+<td style=text-align:center>Points</td>
+<td>200</td>
+</tr>
+<tr>
+<td style=text-align:center>Difficulty</td>
+<td>★★☆☆☆</td>
+</tr>
+<tr>
+<td style=text-align:center>Solves</td>
+<td>86 (total of all four divisions)</td>
+</tr>
+<tr>
+<td style=text-align:center>Release Date</td>
+<td>2021-11-13 06:00:00</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>If you can beat me in the game I&rsquo;ll give you the flag!</p>
+<p><a href=https://scratch.mit.edu/projects/596813541/>https://scratch.mit.edu/projects/596813541/</a></p>
+</blockquote>
+<hr>
+<p>First, we need to win the bot.</p>
+<figure><img src=1.png width=400>
+</figure>
+<p>Then, choose title and there was a yellow note. After dragging down the note, we can see some code underneath.</p>
+<figure><img src=2.png width=400>
+</figure>
+<p>One of the blocks has <code>result = 03vx{_ihq0xhh7svtx}t{sv180x{r</code>. Inserting this as the answer, we noticed the variable result on the left bar became <code>gjbdqs109gd00n}b_dr_q}bhogdq{</code> which is not the same as the result in the code.</p>
+<p>Then inserting <code>hkcert21{</code> as the answer and found out the variable result became <code>03vx{_ihq</code>. After some matching and guessing work, we were able to get the flag <code>hkcert21{he11o_caesar_cipher}</code>.</p>
+</article>
+<footer class=post-footer>
+<div class=post-footer__tags>
+<i class="bx bxs-tag-alt"></i>
+<span><a href=/tags/ctf/>ctf</a></span>
+<span><a href=/tags/hkcert21/>hkcert21</a></span>
+<span><a href=/tags/scratch/>scratch</a></span>
+</div>
+<span><i class="bx bxs-time"></i> 2021-11-17 20:29:30</span>
+</footer>
+<div id=comments>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//tnychn.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+</main>
+<footer>
+<div class="footer container">
+<span>Copyright 2022 © Tony Chan</span>
+<span>Powered by <a href=https://gohugo.io>Hugo</a> with <a href=https://github.com/tnychn/tnychn.github.io>Custom Theme</a></span>
+</div>
+</footer>
+</body>
+</html>
