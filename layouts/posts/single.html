@@ -24,6 +24,9 @@
         <span><i class="bx bxs-time"></i> {{ .Lastmod.Format "2006-01-02 15:04:05" }}</span>
         {{ end }}
     </footer>
+    <div id="comments">
+        {{ template "_internal/disqus.html" . }}
+    </div>
     <!-- <script repo="tnychn/tnychn.github.io" issue-term="og:title" label="comments" theme="github-dark"
         src="https://utteranc.es/client.js" crossorigin="anonymous" async></script> -->
 </main>

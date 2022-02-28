@@ -5,7 +5,7 @@ paginate = 5
 paginatePath = ""
 enableEmoji = true
 enableGitInfo = true
-# disqusShortname = "tnychn"
+disqusShortname = "tnychn"
 
 [frontmatter]
     date = ["date"]
