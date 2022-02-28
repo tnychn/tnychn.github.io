@@ -25,10 +25,10 @@ body {
     color: $color-fg;
     background-color: $color-bg;
     font-size: $font-size;
-    @media (max-width: 684px) {
+    @media (max-width: 576px) {
         font-size: $font-size * 0.85;
     }
-    @media (max-width: 382px) {
+    @media (max-width: 320px) {
         font-size: $font-size * 0.75;
     }
 }
@@ -128,6 +128,7 @@ blockquote {
 }
 
 code {
+    word-break: break-word;
     font-family: "JetBrains Mono", monospace;
 }
 
@@ -137,6 +138,7 @@ code {
         line-height: 1.25em;
         border-radius: 5px;
         padding: 1rem;
+        padding-left: 0.5rem;
         overflow-x: scroll;
         &:hover {
             > [data-lang]::before {
@@ -174,6 +176,9 @@ code {
                 color: #000000;
                 background-color: #777bb3;
             }
+        }
+        > code {
+            word-break: normal;
         }
     }
 }
@@ -261,6 +266,7 @@ ol {
                 margin-left: 1.5rem;
                 a {
                     font-weight: bold;
+                    white-space: nowrap;
                 }
             }
         }
@@ -344,12 +350,7 @@ ol {
     }
 }
 
-
 .katex-display {
     overflow-x: scroll;
     overflow-y: hidden
-}
-
-#comments {
-    margin-bottom: 5rem;
 }
