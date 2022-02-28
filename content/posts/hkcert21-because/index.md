@@ -107,43 +107,43 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 The procedure of this login page is very typical, getting the inputs from an HTML form and then sending a HTTP POST request to server with the credentials as the payload. But there are some special conditions required for the credentials in order to log into the page. If the credentials do not pass the criterions, an error message is shown on the HTML.
 
 1. **Line 14:** both the lengths of username and password must not exceed 24 characters
-{{< highlight php "linenostart=14" >}}
+```php {linenostart=14}
 if ((strlen($_POST["username"]) > 24) or strlen($_POST["password"]) > 24)
-{{< / highlight >}}
+```
 2. **Line 19 & Line 23:** both username and password must not be empty
-{{< highlight php "linenostart=19" >}}
+```php {linenostart=19}
 if(empty(trim($_POST["username"])))
-{{< / highlight >}}
-{{< highlight php "linenostart=23" >}}
+```
+```php {linenostart=23}
 if(empty(trim($_POST["password"])))
-{{< / highlight >}}
+```
 3. **Line 27:** both username and password must be alphanumeric
-{{< highlight php "linenostart=27" >}}
+```php {linenostart=27}
 if (!ctype_alnum(trim($_POST["password"])) or !ctype_alnum(trim($_POST["username"])))
-{{< / highlight >}}
+```
 4. **Line 46:** `username === "hkcert"` (triple equality: exact equal, same type and same value)
-{{< highlight php "linenostart=46" >}}
+```php {linenostart=46}
 if ($username === 'hkcert')
-{{< / highlight >}}
+```
 5. **Line 47:**  `the md5 hash of password == 0` (mind the double equality used here, we will talk about this later)
-{{< highlight php "linenostart=47" >}}
+```php {linenostart=47}
 (hash('md5', $password) == 0)
-{{< / highlight >}}
+```
 6. **Line 48:** password must start with a "hkcert" prefix
-{{< highlight php "linenostart=48" >}}
+```php {linenostart=48}
 (substr($password,0,strlen('hkcert')) === 'hkcert')
-{{< / highlight >}}
+```
 7. **Line 49:** the UNIX `grep` command is used here to search if the exact same password already exists in the `./used_pw.txt` file;
 This means we cannot reuse the passwords previously used by other teams that solved this challenge.
-{{< highlight php "linenostart=49" >}}
+```php {linenostart=49}
 if (!exec('grep '.escapeshellarg($password).' ./used_pw.txt'))
-{{< / highlight >}}
+```
 
 **From *Point 4*, we can already conclude that the username required is `hkcert` without a doubt.**
 
 Now, we need to figure out the password. First, let's take a look at *Point 7*. If we navigate to `/used_pw.txt`, we can see a plain text with passwords on each line.
 
-```toml
+```txt {linenos=false}
 # the below line is probably for identification purpose?
 # can be ignored anyways as we are using grep to search the file
 hkcertctf21
@@ -158,7 +158,7 @@ First thing you will notice is that all the passwords have the `hkcert` prefix. 
 
 Now if you try md5 hashing each of these passwords, you might already notice another common characteristic among all these passwords.
 
-```toml
+```txt {linenos=false}
 hkcert1513101299  # 0e943391270105244747709215219780
 hkcert1485194470  # 0e758523168817202461901834539918
 hkcert_fcuk054389891  # 0e960908643632998868593805082813
@@ -222,7 +222,7 @@ while True:
 
 Here was the output of the script.
 
-```
+```bash {linenos=false}
 $ python3 solve.py                         09:02:00 PM
 hkcertlol247360143
 0e177940692660666190029640266163
