@@ -4,7 +4,7 @@ title: "About"
 
 ### Hi, I'm Tony Chan
 
-I am a 16-year-old high school student from Hong Kong.
+I am a 17-year-old high school student from Hong Kong.
 
 I code interesting stuff as hobby and write my random thoughts here in my free time.
 
