@@ -5,7 +5,7 @@ paginate = 5
 paginatePath = ""
 enableEmoji = true
 enableGitInfo = true
-disqusShortname = "tnychn"
+# disqusShortname = "tnychn"
 
 [frontmatter]
     date = ["date"]
@@ -26,17 +26,13 @@ disqusShortname = "tnychn"
         guessSyntax = true
         noClasses = true
         lineNos = true
-        lineNumbersInTable = true
-    [markup.tableOfContents]
-        endLevel = 4
-        startLevel = 2
-        ordered = false
+        lineNumbersInTable = false
 
 [params]
     author = "Tony Chan"
-    subtitle = "The /dev/stdout for my random thoughts."
+    subtitle = "*The /dev/stdout for my programming thoughts.*"
     description = """
-### Welcome to my site!
+### Hello, world!
 
 Here you can find all my blog posts about programming and stuff.
 
@@ -46,25 +42,27 @@ I hope you enjoy what I find interesting enough to write.
     cfToken = "c7dda5e79c594043b9232c2ca1a86ebb"
     [[params.socials]]
         type = "github"
+        icon = "bxl-github"
         url = "https://github.com/tnychn"
     [[params.socials]]
-        type = "mail"
+        type = "gitlab"
+        icon = "bxl-gitlab"
+        url = "https://gitlab.com/tnychn"
+    [[params.socials]]
+        type = "email"
+        icon = "bx-mail-send"
         url = "mailto:tnychn@pm.me"
 
 [menu]
     [[menu.main]]
-        name = "HOME"
-        url = "/"
+        name = "about"
+        url = "/about"
         weight = 1
     [[menu.main]]
-        name = "POSTS"
+        name = "posts"
         url = "/posts"
         weight = 2
     [[menu.main]]
-        name = "TAGS"
+        name = "tags"
         url = "/tags"
         weight = 3
-    [[menu.main]]
-        name = "ABOUT"
-        url = "/about"
-        weight = 4

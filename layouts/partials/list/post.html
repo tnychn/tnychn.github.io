@@ -1,21 +1,18 @@
-<section>
-    <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
-    <p style="margin-block: 0;">
-        <label>
+<section class="list-post">
+    <h4 class="list-post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h4>
+    <div class="list-post-meta">
+        <div class="list-post-meta__info">
             <span>{{ .Date.Format "2 Jan 2006" }}</span>
             <span>· {{ .ReadingTime }} min read</span>
             <span>· {{ .WordCount }} words</span>
-        </label>
-        <br>
+        </div>
         {{ if .GetTerms "tags" }}
-        <label>
-            <span>Tags: </span>
+        <div class="list-post-meta__tags">
             {{ range .GetTerms "tags" }}
-            <span>#<a href="{{ .RelPermalink }}">{{ .Title }}</a></span>
+            <span><a href="{{ .RelPermalink }}">{{ .Title }}</a></span>
             {{ end }}
-        </label>
+        </div>
         {{ end }}
-    </p>
-    <p style="margin-block: 0.25em;">{{ .Description }}</p>
-    <span><a href="{{ .RelPermalink }}">read more...</a></span>
+    </div>
+    <span>{{ .Description }}</span>
 </section>

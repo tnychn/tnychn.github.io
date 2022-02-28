@@ -1,34 +1,30 @@
 {{ define "main" }}
-<main id="post">
-    <h1>{{ .Title }}</h1>
-    <header>
-        <span>{{ .Date.Format "2 Jan 2006" }}</span>
-        <span>· {{ .ReadingTime }} min read</span>
-        <span>· {{ .WordCount }} words</span>
-        {{ if .Draft }}<span>· <strong>Draft</strong></span>{{ end }}
-        <p>{{ .Description }}</p>
+<main class="post">
+    <h1 class="post-title">{{ .Title }}</h1>
+    <header class="post-header">
+        <div class="post-header__meta">
+            <span>{{ .Date.Format "2 Jan 2006" }}</span>
+            <span>· {{ .ReadingTime }} min read</span>
+            <span>· {{ .WordCount }} words</span>
+            {{ if .Draft }}<span>· <strong>Draft</strong></span>{{ end }}
+        </div>
+        <span>{{ .Description }}</span>
     </header>
-    {{/* <aside id="sidecar">
-    {{ if and (gt .WordCount 200 ) }}
-    <h6><a href="#">{{ .Title }}</a></h6>
-    {{- .TableOfContents -}}
-    {{ end }}
-    </aside> */}}
     <article>{{- .Content -}}</article>
-    {{ if .GetTerms "tags" }}
-    <footer>
-        <p>
-            <span>Tags: </span>
+    <footer class="post-footer">
+        {{ if .GetTerms "tags" }}
+        <div class="post-footer__tags">
+            <i class="bx bxs-tag-alt"></i>
             {{ range .GetTerms "tags" }}
-            <span>#<a href="{{ .RelPermalink }}">{{ .Title }}</a></span>
+            <span><a href="{{ .RelPermalink }}">{{ .Title }}</a></span>
             {{ end }}
-        </p>
+        </div>
+        {{ end }}
         {{ if ne .Date .Lastmod }}
-        <p>Modified: {{ .Lastmod.Format "2006-01-02 15:04:05" }}</p>
+        <span><i class="bx bxs-time"></i> {{ .Lastmod.Format "2006-01-02 15:04:05" }}</span>
         {{ end }}
     </footer>
-    {{ end }}
-    <script repo="tnychn/tnychn.github.io" issue-term="og:title" label="comments" theme="github-dark"
-        src="https://utteranc.es/client.js" crossorigin="anonymous" async></script>
+    <!-- <script repo="tnychn/tnychn.github.io" issue-term="og:title" label="comments" theme="github-dark"
+        src="https://utteranc.es/client.js" crossorigin="anonymous" async></script> -->
 </main>
 {{ end }}

@@ -1,23 +1,5 @@
 {{ define "main" }}
 <main>
     <section>{{ .Site.Params.description | markdownify }}</section>
-    {{ $posts := where .Site.RegularPages "Section" "==" "posts" }}
-    {{ if $posts }}
-    <section>
-        <h2>Recent Posts</h2>
-        {{ range first 3 $posts.ByDate.Reverse }}
-        <p>
-            <span><strong>></strong></span>
-            <label>{{ .Date.Format "02 Jan 2006" }}</label>
-            <span><a href="{{ .RelPermalink }}"><strong>{{ .Title }}</strong></a></span>
-            <span class="recent-tags">
-                {{ range .GetTerms "tags" }}
-                <label>#{{ .Title }}</label>
-                {{ end }}
-            </span>
-        </p>
-        {{ end }}
-    </section>
-    {{ end }}
 </main>
 {{ end }}
