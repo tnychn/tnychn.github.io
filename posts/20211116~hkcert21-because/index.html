@@ -1,0 +1,287 @@
+<!doctype html><html lang=en><head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge">
+<meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name=keywords content="[]">
+<meta name=description content>
+<meta property="og:title" content="HKCERT CTF 2021: 因講了出來 Because I Said It">
+<meta property="og:description" content="This post is part of the HKCERT 2021 CTF series.
+     Name 因講了出來 (Because I Said It)     Tags web   Points 150   Difficulty ★☆☆☆☆   Solves 76 (total of all four divisions)   Release Date 2021-11-12 13:00:00     If you can solve Rickroll in 2020, you will be able to solve it. Probably.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://tnychn.github.io/posts/20211116~hkcert21-because/"><meta property="article:section" content="posts">
+<meta property="article:modified_time" content="2022-02-28T19:14:41+08:00">
+<title>HKCERT CTF 2021: 因講了出來 Because I Said It | tnychn</title>
+<link rel=icon type=image/png href=/favicon.png>
+<link rel=stylesheet type=text/css href=https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css>
+<link rel=stylesheet type=text/css href=/sass/main.min.26b51df4bed988bb17c52deb3a4de5e9c059dd94a281166b840d31630f12681a.css>
+<link rel=preconnect href=https://fonts.googleapis.com>
+<link rel=preconnect href=https://fonts.gstatic.com crossorigin>
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap">
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap">
+<link rel=stylesheet href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap">
+<link rel=stylesheet crossorigin=anonymous href=https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css>
+<script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "c7dda5e79c594043b9232c2ca1a86ebb"}'></script>
+</head>
+<body><header>
+<div class="header container">
+<div class=header__left>
+<h1><a href=http://tnychn.github.io>TNYCHN</a></h1>
+<span><em>The /dev/stdout for my programming thoughts.</em></span>
+</div>
+<div class=header__right>
+<nav class=header__right__socials>
+<div><a href=https://github.com/tnychn target=_blank><i class="bx bx-tada-hover bxl-github"></i></a></div>
+<div><a href=https://gitlab.com/tnychn target=_blank><i class="bx bx-tada-hover bxl-gitlab"></i></a></div>
+<div><a href=mailto:tnychn@pm.me target=_blank><i class="bx bx-tada-hover bx-mail-send"></i></a></div>
+</nav>
+<nav class=header__right__navbar>
+<div><a href=/about>About</a></div>
+<div><a href=/posts>Posts</a></div>
+<div><a href=/tags>Tags</a></div>
+</nav>
+</div>
+</div>
+</header>
+<main class=post>
+<h1 class=post-title>HKCERT CTF 2021: 因講了出來 Because I Said It</h1>
+<header class=post-header>
+<div class=post-header__meta>
+<span>16 Nov 2021</span>
+<span>· 6 min read</span>
+<span>· 1131 words</span>
+</div>
+<span></span>
+</header>
+<article><blockquote>
+<p><strong>This post is part of the <a href=/tags/hkcert21>HKCERT 2021 CTF series</a>.</strong></p>
+</blockquote>
+<hr>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>Name</th>
+<th>因講了出來 (Because I Said It)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>Tags</td>
+<td>web</td>
+</tr>
+<tr>
+<td style=text-align:center>Points</td>
+<td>150</td>
+</tr>
+<tr>
+<td style=text-align:center>Difficulty</td>
+<td>★☆☆☆☆</td>
+</tr>
+<tr>
+<td style=text-align:center>Solves</td>
+<td>76 (total of all four divisions)</td>
+</tr>
+<tr>
+<td style=text-align:center>Release Date</td>
+<td>2021-11-12 13:00:00</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>If you can solve Rickroll in 2020, you will be able to solve it. Probably.</p>
+<p>The PHP version used for the challenge is 8.0.12.</p>
+<p><a href=http://chalf.hkcert21.pwnable.hk:28156/>http://chalf.hkcert21.pwnable.hk:28156/</a></p>
+</blockquote>
+<figure><img src=1.png width=300>
+</figure>
+<hr>
+<h2 id=analysis>Analysis</h2>
+<p>The first thing we did was clicking into the <em>Check Here</em> link intuitively. It redirects us to <code>/source.php</code> where we can see the PHP source code of the page.</p>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1</span>session_start();
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3</span><span style=color:#6ab825;font-weight:700>if</span>(isset(<span style=color:#40ffff>$_SESSION</span>[<span style=color:#ed9d13>&#34;loggedin&#34;</span>]) &amp;&amp; <span style=color:#40ffff>$_SESSION</span>[<span style=color:#ed9d13>&#34;loggedin&#34;</span>] === <span style=color:#6ab825;font-weight:700>true</span>){
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4</span>    header(<span style=color:#ed9d13>&#34;location: welcome.php&#34;</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5</span>    <span style=color:#6ab825;font-weight:700>exit</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6</span>}
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8</span><span style=color:#40ffff>$username</span> = <span style=color:#40ffff>$password</span> = <span style=color:#ed9d13>&#34;&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9</span><span style=color:#40ffff>$username_err</span> = <span style=color:#40ffff>$password_err</span> = <span style=color:#40ffff>$login_err</span> = <span style=color:#ed9d13>&#34;&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">10</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">11</span><span style=color:#6ab825;font-weight:700>if</span>(<span style=color:#40ffff>$_SERVER</span>[<span style=color:#ed9d13>&#34;REQUEST_METHOD&#34;</span>] == <span style=color:#ed9d13>&#34;POST&#34;</span>){
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">12</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">13</span>    <span style=color:#6ab825;font-weight:700>if</span> ((strlen(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;username&#34;</span>]) &gt; <span style=color:#3677a9>24</span>) <span style=color:#6ab825;font-weight:700>or</span> strlen(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;password&#34;</span>]) &gt; <span style=color:#3677a9>24</span>) {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">14</span>        header(<span style=color:#ed9d13>&#34;location: https://www.youtube.com/watch?v=2ocykBzWDiM&#34;</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">15</span>        <span style=color:#6ab825;font-weight:700>exit</span>();
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">16</span>    }
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">17</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">18</span>    <span style=color:#6ab825;font-weight:700>if</span>(<span style=color:#6ab825;font-weight:700>empty</span>(trim(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;username&#34;</span>]))){
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">19</span>        <span style=color:#40ffff>$username_err</span> = <span style=color:#ed9d13>&#34;Please enter username.&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">20</span>    } <span style=color:#6ab825;font-weight:700>else</span>{
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">21</span>        <span style=color:#40ffff>$username</span> = trim(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;username&#34;</span>]);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">22</span>        <span style=color:#6ab825;font-weight:700>if</span>(<span style=color:#6ab825;font-weight:700>empty</span>(trim(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;password&#34;</span>]))){
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">23</span>            <span style=color:#40ffff>$password_err</span> = <span style=color:#ed9d13>&#34;Please enter your password.&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">24</span>        } <span style=color:#6ab825;font-weight:700>else</span>{
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">25</span>            <span style=color:#40ffff>$password</span> = trim(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;password&#34;</span>]);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">26</span>            <span style=color:#6ab825;font-weight:700>if</span> (!ctype_alnum(trim(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;password&#34;</span>])) <span style=color:#6ab825;font-weight:700>or</span> !ctype_alnum(trim(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;username&#34;</span>]))) {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">27</span>                <span style=color:#6ab825;font-weight:700>switch</span> ( rand(<span style=color:#3677a9>0</span>,<span style=color:#3677a9>2</span>) ) {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">28</span>                    <span style=color:#6ab825;font-weight:700>case</span> <span style=color:#3677a9>0</span>:
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">29</span>                    header(<span style=color:#ed9d13>&#34;location: https://www.youtube.com/watch?v=l7pP3ydt3tU&#34;</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">30</span>                    <span style=color:#6ab825;font-weight:700>break</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">31</span>                    <span style=color:#6ab825;font-weight:700>case</span> <span style=color:#3677a9>1</span>:
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">32</span>                    header(<span style=color:#ed9d13>&#34;location: https://www.youtube.com/watch?v=G094II5gIsI&#34;</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">33</span>                    <span style=color:#6ab825;font-weight:700>break</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">34</span>                    <span style=color:#6ab825;font-weight:700>case</span> <span style=color:#3677a9>2</span>:
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">35</span>                    header(<span style=color:#ed9d13>&#34;location: https://www.youtube.com/watch?v=0YQtsez-_D4&#34;</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">36</span>                    <span style=color:#6ab825;font-weight:700>break</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">37</span>                    <span style=color:#6ab825;font-weight:700>default</span>:
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">38</span>                    header(<span style=color:#ed9d13>&#34;location: https://www.youtube.com/watch?v=2ocykBzWDiM&#34;</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">39</span>                    <span style=color:#6ab825;font-weight:700>exit</span>();
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">40</span>                }   
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">41</span>            }
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">42</span>        }
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">43</span>    }    
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">44</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">45</span>    <span style=color:#6ab825;font-weight:700>if</span> (<span style=color:#40ffff>$username</span> === <span style=color:#ed9d13>&#39;hkcert&#39;</span>) {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">46</span>        <span style=color:#6ab825;font-weight:700>if</span>( hash(<span style=color:#ed9d13>&#39;md5&#39;</span>, <span style=color:#40ffff>$password</span>) == <span style=color:#3677a9>0</span> &amp;&amp;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">47</span>            substr(<span style=color:#40ffff>$password</span>,<span style=color:#3677a9>0</span>,strlen(<span style=color:#ed9d13>&#39;hkcert&#39;</span>)) === <span style=color:#ed9d13>&#39;hkcert&#39;</span>) {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">48</span>            <span style=color:#6ab825;font-weight:700>if</span> (!exec(<span style=color:#ed9d13>&#39;grep &#39;</span>.escapeshellarg(<span style=color:#40ffff>$password</span>).<span style=color:#ed9d13>&#39; ./used_pw.txt&#39;</span>)) {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">49</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">50</span>                <span style=color:#40ffff>$_SESSION</span>[<span style=color:#ed9d13>&#34;loggedin&#34;</span>] = <span style=color:#6ab825;font-weight:700>true</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">51</span>                <span style=color:#40ffff>$_SESSION</span>[<span style=color:#ed9d13>&#34;username&#34;</span>] = <span style=color:#40ffff>$username</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">52</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">53</span>                <span style=color:#40ffff>$myfile</span> = fopen(<span style=color:#ed9d13>&#34;./used_pw.txt&#34;</span>, <span style=color:#ed9d13>&#34;a&#34;</span>) <span style=color:#6ab825;font-weight:700>or</span> <span style=color:#6ab825;font-weight:700>die</span>(<span style=color:#ed9d13>&#34;Unable to open file!&#34;</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">54</span>                fwrite(<span style=color:#40ffff>$myfile</span>, <span style=color:#40ffff>$password</span>.<span style=color:#ed9d13>&#34;</span><span style=color:#ed9d13>\n</span><span style=color:#ed9d13>&#34;</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">55</span>                fclose(<span style=color:#40ffff>$myfile</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">56</span>                header(<span style=color:#ed9d13>&#34;location: welcome.php&#34;</span>);
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">57</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">58</span>            } <span style=color:#6ab825;font-weight:700>else</span> {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">59</span>                <span style=color:#40ffff>$login_err</span> = <span style=color:#ed9d13>&#34;Password has been used.&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">60</span>            }
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">61</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">62</span>        } <span style=color:#6ab825;font-weight:700>else</span> {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">63</span>            <span style=color:#40ffff>$login_err</span> = <span style=color:#ed9d13>&#34;Invalid username or password.&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">64</span>        }
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">65</span>    } <span style=color:#6ab825;font-weight:700>else</span> {
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">66</span>        <span style=color:#40ffff>$login_err</span> = <span style=color:#ed9d13>&#34;Invalid username or password.&#34;</span>;
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">67</span>    }
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">68</span>}
+</code></pre></div><p>The procedure of this login page is very typical, getting the inputs from an HTML form and then sending a HTTP POST request to server with the credentials as the payload. But there are some special conditions required for the credentials in order to log into the page. If the credentials do not pass the criterions, an error message is shown on the HTML.</p>
+<ol>
+<li><strong>Line 14:</strong> both the lengths of username and password must not exceed 24 characters</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style="margin-right:.4em;padding:0 .4em;color:#686868">14</span><span style=color:#6ab825;font-weight:700>if</span> ((strlen(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;username&#34;</span>]) &gt; <span style=color:#3677a9>24</span>) <span style=color:#6ab825;font-weight:700>or</span> strlen(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;password&#34;</span>]) &gt; <span style=color:#3677a9>24</span>)
+</code></pre></div><ol start=2>
+<li><strong>Line 19 & Line 23:</strong> both username and password must not be empty</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style="margin-right:.4em;padding:0 .4em;color:#686868">19</span><span style=color:#6ab825;font-weight:700>if</span>(<span style=color:#6ab825;font-weight:700>empty</span>(trim(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;username&#34;</span>])))
+</code></pre></div><div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style="margin-right:.4em;padding:0 .4em;color:#686868">23</span><span style=color:#6ab825;font-weight:700>if</span>(<span style=color:#6ab825;font-weight:700>empty</span>(trim(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;password&#34;</span>])))
+</code></pre></div><ol start=3>
+<li><strong>Line 27:</strong> both username and password must be alphanumeric</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style="margin-right:.4em;padding:0 .4em;color:#686868">27</span><span style=color:#6ab825;font-weight:700>if</span> (!ctype_alnum(trim(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;password&#34;</span>])) <span style=color:#6ab825;font-weight:700>or</span> !ctype_alnum(trim(<span style=color:#40ffff>$_POST</span>[<span style=color:#ed9d13>&#34;username&#34;</span>])))
+</code></pre></div><ol start=4>
+<li><strong>Line 46:</strong> <code>username === "hkcert"</code> (triple equality: exact equal, same type and same value)</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style="margin-right:.4em;padding:0 .4em;color:#686868">46</span><span style=color:#6ab825;font-weight:700>if</span> (<span style=color:#40ffff>$username</span> === <span style=color:#ed9d13>&#39;hkcert&#39;</span>)
+</code></pre></div><ol start=5>
+<li><strong>Line 47:</strong> <code>the md5 hash of password == 0</code> (mind the double equality used here, we will talk about this later)</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style="margin-right:.4em;padding:0 .4em;color:#686868">47</span>(hash(<span style=color:#ed9d13>&#39;md5&#39;</span>, <span style=color:#40ffff>$password</span>) == <span style=color:#3677a9>0</span>)
+</code></pre></div><ol start=6>
+<li><strong>Line 48:</strong> password must start with a &ldquo;hkcert&rdquo; prefix</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style="margin-right:.4em;padding:0 .4em;color:#686868">48</span>(substr(<span style=color:#40ffff>$password</span>,<span style=color:#3677a9>0</span>,strlen(<span style=color:#ed9d13>&#39;hkcert&#39;</span>)) === <span style=color:#ed9d13>&#39;hkcert&#39;</span>)
+</code></pre></div><ol start=7>
+<li><strong>Line 49:</strong> the UNIX <code>grep</code> command is used here to search if the exact same password already exists in the <code>./used_pw.txt</code> file;
+This means we cannot reuse the passwords previously used by other teams that solved this challenge.</li>
+</ol>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-php data-lang=php><span style="margin-right:.4em;padding:0 .4em;color:#686868">49</span><span style=color:#6ab825;font-weight:700>if</span> (!exec(<span style=color:#ed9d13>&#39;grep &#39;</span>.escapeshellarg(<span style=color:#40ffff>$password</span>).<span style=color:#ed9d13>&#39; ./used_pw.txt&#39;</span>))
+</code></pre></div><p><strong>From <em>Point 4</em>, we can already conclude that the username required is <code>hkcert</code> without a doubt.</strong></p>
+<p>Now, we need to figure out the password. First, let&rsquo;s take a look at <em>Point 7</em>. If we navigate to <code>/used_pw.txt</code>, we can see a plain text with passwords on each line.</p>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt># the below line is probably for identification purpose?
+# can be ignored anyways as we are using grep to search the file
+hkcertctf21
+
+hkcert1513101299
+hkcert1485194470
+hkcert_fcuk054389891
+hkcertctf228191174
+</code></pre></div><p>First thing you will notice is that all the passwords have the <code>hkcert</code> prefix. This conforms <em>Point 6</em>.</p>
+<p>Now if you try md5 hashing each of these passwords, you might already notice another common characteristic among all these passwords.</p>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-txt data-lang=txt>hkcert1513101299  # 0e943391270105244747709215219780
+hkcert1485194470  # 0e758523168817202461901834539918
+hkcert_fcuk054389891  # 0e960908643632998868593805082813
+hkcertctf228191174  # 0e831500119534187998113976784254
+</code></pre></div><p>Can you see it? All of the hashes have a <code>0e</code> prefix and a bunch of digits. These are all scientific numbers with base 0.</p>
+<p>Why is that? Remember the double equality we mentioned in <em>Point 5</em>?</p>
+<h2 id=php-loose-comparison--type-juggling>PHP Loose Comparison & Type Juggling</h2>
+<p>The <code>==</code> double equality sign in PHP is for loose comparison. When comparing a string to a number, PHP will attempt to convert the string to a number then perform a numeric comparison. The type conversion before comparing is called <em>type juggling</em>.</p>
+<p>Now if we take a look of the official PHP <a href=https://www.php.net/manual/en/function.md5.php>manual</a> of the <code>md5</code> function, we can find something interesting in the &ldquo;User Contributed Notes&rdquo; section.</p>
+<blockquote>
+<p><strong>Comment by Ray Paseur</strong></p>
+<p>md5(&lsquo;240610708&rsquo;) == md5(&lsquo;QNKCDZO&rsquo;)</p>
+<p>This comparison is true because both md5() hashes start &lsquo;0e&rsquo; so PHP type juggling understands these strings to be scientific notation. By definition, zero raised to any power is zero.</p>
+</blockquote>
+<p>This means if we loose compare a string <code>"0e123456789"</code> with an integer <code>0</code>, the result is <code>true</code>.</p>
+<h2 id=the-exploit>The Exploit</h2>
+<p>Now that we understand the weakness of loose comparison, we can make use of this to do the exploit.</p>
+<p>In <em>Point 5</em>, since the source code is loose comparing the md5 hash string of the password with integer 0, if we can find a string with a md5 hash that matches the pattern <code>/^0+e[0-9]+$/</code>, the if-condition will return true, hence logging us into the page.</p>
+<p>For this purpose, I wrote a simple Python script to brute force the password.</p>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style="margin-right:.4em;padding:0 .4em;color:#686868"> 1</span><span style=color:#6ab825;font-weight:700>import</span> <span style=color:#447fcf;text-decoration:underline>hashlib</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 2</span><span style=color:#6ab825;font-weight:700>import</span> <span style=color:#447fcf;text-decoration:underline>random</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 3</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 4</span>i = <span style=color:#3677a9>1</span> <span style=color:#999;font-style:italic># try incrementally with a number, starting from 1</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 5</span>s = <span style=color:#ed9d13>&#34;lol&#34;</span> <span style=color:#999;font-style:italic># prepend with &#34;lol&#34; to increase chance of success, and to prevent getting a used password by other teams</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 6</span>prefix = <span style=color:#ed9d13>&#34;hkcert&#34;</span>  <span style=color:#999;font-style:italic># Point 6</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 7</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 8</span><span style=color:#6ab825;font-weight:700>while</span> <span style=color:#6ab825;font-weight:700>True</span>:
+<span style="margin-right:.4em;padding:0 .4em;color:#686868"> 9</span>    password = prefix + <span style=color:#24909d>str</span>(i)
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">10</span>    <span style=color:#24909d>print</span>(password + <span style=color:#ed9d13>&#34;</span><span style=color:#ed9d13>\r</span><span style=color:#ed9d13>&#34;</span>, end=<span style=color:#ed9d13>&#34;&#34;</span>)  <span style=color:#999;font-style:italic># uses &#34;\r&#34; to avoid spamming the stdout</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">11</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">12</span>    <span style=color:#999;font-style:italic># Point 1</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">13</span>    <span style=color:#6ab825;font-weight:700>if</span> <span style=color:#24909d>len</span>(password) &gt; <span style=color:#3677a9>24</span>:
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">14</span>        <span style=color:#24909d>print</span>(<span style=color:#ed9d13>&#34;length exceeded&#34;</span>)
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">15</span>        <span style=color:#6ab825;font-weight:700>break</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">16</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">17</span>    <span style=color:#999;font-style:italic># get the md5 hash</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">18</span>    out = hashlib.md5(password.encode(<span style=color:#ed9d13>&#39;utf-8&#39;</span>)).hexdigest()
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">19</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">20</span>    <span style=color:#999;font-style:italic># Point 5</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">21</span>    <span style=color:#6ab825;font-weight:700>if</span> out.startswith(<span style=color:#ed9d13>&#34;0e&#34;</span>) <span style=color:#6ab825;font-weight:700>and</span> out[<span style=color:#3677a9>2</span>:].isdigit():
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">22</span>        <span style=color:#24909d>print</span>(password)  <span style=color:#999;font-style:italic># print the result</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">23</span>        <span style=color:#24909d>print</span>(out)
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">24</span>        <span style=color:#6ab825;font-weight:700>break</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">25</span>
+<span style="margin-right:.4em;padding:0 .4em;color:#686868">26</span>    i += <span style=color:#3677a9>1</span>
+</code></pre></div><p>Here was the output of the script.</p>
+<div class=highlight><pre tabindex=0 style=color:#d0d0d0;background-color:#202020;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash>$ python3 solve.py                         09:02:00 PM
+hkcertlol247360143
+0e177940692660666190029640266163
+$                                  59m 42s 10:01:44 PM
+</code></pre></div><p>I plugged the charger into my 2016 MacBook Pro, went to sleep and keep the script running. The script spent almost an hour to find the result. I knew there were faster ways, but since our team was running out of time, I didn&rsquo;t think much. When I woke up a few hours later, I had already got the result.</p>
+<p>Anyway, we now log in with username <code>hkcert</code> and password <code>hkcertlol247360143</code> from the login page, we will be successfully logged into a page showing the flag <code>hkcert21{php_da_b3st_l4ng3ag3_3v3r_v3ry_4ws0m3}</code>. /s PHP is the best language ever, very awesome!</p>
+</article>
+<footer class=post-footer>
+<div class=post-footer__tags>
+<i class="bx bxs-tag-alt"></i>
+<span><a href=/tags/ctf/>ctf</a></span>
+<span><a href=/tags/hkcert21/>hkcert21</a></span>
+<span><a href=/tags/web/>web</a></span>
+<span><a href=/tags/php/>php</a></span>
+</div>
+<span><i class="bx bxs-time"></i> 2022-02-28 19:14:41</span>
+</footer>
+<div id=comments>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//tnychn.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+</main>
+<footer>
+<div class="footer container">
+<span>Copyright 2024 © Tony Chan</span>
+<span>Powered by <a href=https://gohugo.io>Hugo</a> with <a href=https://github.com/tnychn/tnychn.github.io>Custom Theme</a></span>
+</div>
+</footer>
+</body>
+</html>
