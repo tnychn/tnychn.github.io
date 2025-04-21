@@ -1,68 +1,31 @@
-baseURL = "http://tnychn.github.io"
-languageCode = "en-hk"
+base_url = "https://tnychn.github.io"
+
 title = "tnychn"
-paginate = 5
-paginatePath = ""
-enableEmoji = true
-enableGitInfo = true
-disqusShortname = "tnychn"
+description = "My /dev/stdout for the internet."
+author = "Tony Chan (tnychn)"
 
-[frontmatter]
-    date = ["date"]
-    lastmod = [":git", "date"]
-    publishDate = []
-    expiryDate = []
+default_language = "en-HK"
 
-[taxonomies]
-  tag = "tags"
+minify_html = false
+compile_sass = false
+generate_feeds = false
+build_search_index = false
+generate_sitemap = true
+generate_robots_txt = true
 
-[permalinks]
-  posts = "/posts/:year:month:day~:filename"
+[markdown]
+highlight_code = true
+error_on_missing_highlight = false
+highlight_theme = "gruvbox-dark"
+render_emoji = true
+bottom_footnotes = true
 
-[markup]
-    [markup.highlight]
-        style = "native"
-        codeFences = true
-        guessSyntax = true
-        noClasses = true
-        lineNos = true
-        lineNumbersInTable = false
-
-[params]
-    author = "Tony Chan"
-    subtitle = "*The /dev/stdout for my programming thoughts.*"
-    description = """
-### Hello, world!
-
-Here you can find all my blog posts about programming and stuff.
-
-I hope you enjoy what I find interesting enough to write.
-    """
-    repoURL = "https://github.com/tnychn/tnychn.github.io"
-    cfToken = "c7dda5e79c594043b9232c2ca1a86ebb"
-    [[params.socials]]
-        type = "github"
-        icon = "bxl-github"
-        url = "https://github.com/tnychn"
-    [[params.socials]]
-        type = "gitlab"
-        icon = "bxl-gitlab"
-        url = "https://gitlab.com/tnychn"
-    [[params.socials]]
-        type = "email"
-        icon = "bx-mail-send"
-        url = "mailto:tnychn@pm.me"
-
-[menu]
-    [[menu.main]]
-        name = "about"
-        url = "/about"
-        weight = 1
-    [[menu.main]]
-        name = "posts"
-        url = "/posts"
-        weight = 2
-    [[menu.main]]
-        name = "tags"
-        url = "/tags"
-        weight = 3
+[extra]
+email = "tnychn@pm.me"
+socials = { github = "https://github.com/tnychn" }
+[[extra.navlinks]]
+title = "About"
+path = "/"
+[[extra.navlinks]]
+title = "Blog"
+path = "/blog"

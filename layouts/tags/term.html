@@ -1,8 +1,0 @@
-{{ define "main" }}
-<main>
-    <h1>Tag: "{{ .Title }}"</h1>
-    {{ range index .Site.Taxonomies.tags .Title }}
-    {{- partial "list/post.html" . -}}
-    {{ end }}
-</main>
-{{ end }}

@@ -1,0 +1,193 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+
+:root {
+	--font-serif: "PT Serif", serif;
+	--background: #fefefe;
+	--foreground: #212121;
+	--accent: #0d47a1;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	font-family: var(--font-serif);
+	scroll-behavior: smooth;
+}
+
+/* LISTS */
+
+ul,
+ol {
+	list-style-position: inside;
+}
+
+/* LINKS */
+
+a {
+	opacity: 80%;
+	color: var(--accent);
+	text-underline-offset: 2px;
+	text-decoration: underline solid 0.1em;
+}
+a:visited {
+  text-decoration: underline dashed 0.1em;
+}
+a:hover {
+	opacity: 100%;
+	text-decoration: underline dashed 0.1em;
+}
+
+/* HEADINGS */
+
+h1,
+h2,
+h3,
+h4 {
+	cursor: pointer;
+	position: relative;
+  line-height: 1.1;
+}
+
+h1:hover,
+h2:hover,
+h3:hover,
+h4:hover {
+	text-decoration: underline 3px var(--accent);
+}
+h1::before,
+h2::before,
+h3::before,
+h4::before {
+	content: "#";
+	color: var(--accent);
+	position: absolute;
+	font-size: 0.8em;
+	top: 0.2em;
+	left: -0.75em;
+}
+h1:hover::before,
+h2:hover::before,
+h2:hover::before,
+h3:hover::before,
+h4:hover::before {
+	transform: scale(1.5);
+}
+
+/* TEXTS */
+
+hr {
+  border: none;
+  height: 3px;
+  width: 20rem;
+  margin: 1.5rem auto;
+  background: var(--accent);
+}
+
+p {
+  margin: 1rem 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 1.25rem 0;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+/* LAYOUT */
+
+body {
+	margin: 0;
+	font-size: 1.15rem;
+	line-height: 1.5;
+	color: var(--foreground);
+	background-color: var(--background);
+	display: grid;
+	grid-template-columns: 1fr min(45rem, 90%) 1fr;
+}
+
+body > * {
+	grid-column: 2;
+}
+
+/* HEADER & FOOTER */
+
+body > header,
+body > footer {
+	padding: 2rem 0;
+}
+
+body > header p {
+  margin: 0.5rem 0;
+  line-height: 1.1;
+  font-weight: bolder;
+}
+body > footer p {
+  line-height: 1.1;
+}
+body > footer p:first-child img {
+  transition: all 0.2s ease-in-out;
+}
+body > footer p:first-child img:hover {
+  transform: scale(1.2);
+}
+
+body > header > h1 {
+	display: inline;
+	letter-spacing: -0.1rem;
+	text-decoration: underline 5px var(--accent);
+	text-underline-offset: 3px;
+	color: var(--foreground);
+	cursor: pointer;
+}
+body > header > h1:hover {
+	text-decoration: underline 5px var(--accent);
+}
+body > header > h1::before {
+	content: "";
+}
+
+body > header > nav {
+	display: flex;
+  align-items: center;
+	justify-content: space-between;
+}
+body > header > nav > ul {
+	list-style: none;
+	margin: 0;
+	display: flex;
+}
+body > header > nav > ul > li:not(:last-child) {
+	margin-right: 0.75rem;
+}
+
+body > footer {
+	text-align: center;
+	font-size: smaller;
+}
+
+body > header::after,
+body > footer::before {
+	content: "";
+	left: 0;
+	right: 0;
+	margin: auto;
+	display: block;
+	width: 5rem;
+	border-bottom: var(--accent) solid 0.5rem;
+}
+body > header::after {
+	margin-top: 2rem;
+}
+body > footer::before {
+	margin-bottom: 2rem;
+}
