@@ -7,6 +7,18 @@
 	--accent: #0d47a1;
 }
 
+@media (prefers-color-scheme: dark) {
+	:root {
+		color-scheme: dark;
+		--background: #212121;
+		--foreground: #cccccc;
+		--accent: #ffb300;
+	}
+	img.icon {
+		filter: invert(1);
+	}
+}
+
 * {
 	margin: 0;
 	padding: 0;
@@ -128,6 +140,12 @@ body {
 
 body > * {
 	grid-column: 2;
+}
+
+@media print {
+	body {
+		display: block;
+	}
 }
 
 /* HEADER & FOOTER */
