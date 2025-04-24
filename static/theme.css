@@ -170,29 +170,6 @@ body > footer p:first-child img:hover {
 	transform: scale(1.2);
 }
 
-body > header > h1 {
-	position: relative;
-	display: inline-block;
-	margin-bottom: 0;
-	letter-spacing: -0.1rem;
-	color: var(--foreground);
-	cursor: pointer;
-	text-decoration: none;
-}
-body > header > h1:hover {
-	text-decoration: none;
-}
-body > header > h1::before {
-	content: none;
-}
-body > header > h1::after {
-	content: "";
-	display: block;
-	margin-top: -0.25rem;
-	width: 100%;
-	border-bottom: var(--accent) solid 0.3rem;
-}
-
 body > header > nav {
 	display: flex;
 	align-items: center;
@@ -228,4 +205,50 @@ body > header::after {
 }
 body > footer::before {
 	margin-bottom: 2rem;
+}
+
+/* HEADER TITLE */
+
+body > header > h1 {
+	position: relative;
+	display: inline-block;
+	margin-bottom: 0;
+	letter-spacing: -0.1rem;
+	color: var(--foreground);
+	cursor: pointer;
+	text-decoration: none;
+}
+body > header > h1:hover {
+	text-decoration: none;
+}
+body > header > h1::before {
+	content: none;
+}
+
+body > header > h1 {
+	--a: -45deg; /* angle */
+	--t: .23em; /* thickness */
+	--c: var(--accent); /* color */
+	transition: .3s;
+}
+body > header > h1 > span {
+	transition: .3s;
+	--s: calc(var(--t) * cos(var(--a)));
+	background: linear-gradient(
+			var(--a),
+			#0000 var(--s),
+			var(--c) 0 calc(100% - var(--s)),
+			#0000 0
+		)
+		bottom / var(--i, 85%) var(--t) no-repeat;
+	padding: 0;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
+}
+body > header > h1:hover {
+	transform: scale(1.1);
+}
+body > header > h1:hover > span {
+	--i: 100%;
+	color: white;
 }
