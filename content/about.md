@@ -24,7 +24,7 @@ Below are some of my open-source projects which I consider "completed".
 
 The *GOSP* stack is my current favourite.
 
-- **Backend:** Go/httpx + Postgres
+- **Backend:** Go/[httpx](https://github.com/tnychn/httpx) + Postgres
 - **Frontend:** TypeScript/Solid.js + Kobalte + Tailwind
 
 I'm constantly exploring for more interesting frameworks to learn.
