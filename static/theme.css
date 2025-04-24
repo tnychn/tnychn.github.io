@@ -227,7 +227,7 @@ body > header > h1::before {
 
 body > header > h1 {
 	--a: -45deg; /* angle */
-	--t: .23em; /* thickness */
+	--t: 0.2em; /* thickness */
 	--c: var(--accent); /* color */
 	transition: .3s;
 }
@@ -250,5 +250,10 @@ body > header > h1:hover {
 }
 body > header > h1:hover > span {
 	--i: 100%;
-	color: white;
+	color: black;
+}
+@media (prefers-color-scheme: dark) {
+	body > header > h1:hover > span {
+		color: white;
+	}
 }
