@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
 :root {
-	--font-serif: "PT Serif", serif;
+	--font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	--background: #fefefe;
 	--foreground: #212121;
 	--accent: #0d47a1;
@@ -12,6 +12,7 @@
 		color-scheme: dark;
 		--background: #212121;
 		--foreground: #cccccc;
+		--foreground-muted: #9b9c9d;
 		--accent: #ffb300;
 	}
 	img.icon {
@@ -26,7 +27,7 @@
 }
 
 html {
-	font-family: var(--font-serif);
+	font-family: var(--font-sans);
 	scroll-behavior: smooth;
 }
 
@@ -79,14 +80,7 @@ h4::before {
 	position: absolute;
 	font-size: 0.8em;
 	top: 0.2em;
-	left: -0.75em;
-}
-h1:hover::before,
-h2:hover::before,
-h2:hover::before,
-h3:hover::before,
-h4:hover::before {
-	transform: scale(1.5);
+	left: -1em;
 }
 
 /* TEXTS */
@@ -109,7 +103,7 @@ h3,
 h4,
 h5,
 h6 {
-	margin: 1.25rem 0;
+	margin: 1.5rem 0;
 }
 
 p,
@@ -153,6 +147,7 @@ body > * {
 body > header,
 body > footer {
 	padding: 2rem 0;
+	color: var(--foreground-muted);
 }
 
 body > header p {
