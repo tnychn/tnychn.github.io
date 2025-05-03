@@ -71,17 +71,6 @@ h3:hover,
 h4:hover {
 	text-decoration: underline 3px var(--accent);
 }
-h1::before,
-h2::before,
-h3::before,
-h4::before {
-	content: "#";
-	color: var(--accent);
-	position: absolute;
-	font-size: 0.8em;
-	top: 0.2em;
-	left: -1em;
-}
 
 /* TEXTS */
 
@@ -103,7 +92,50 @@ h3,
 h4,
 h5,
 h6 {
-	margin: 1.5rem 0;
+	margin-top: 2rem;
+	margin-bottom: 1.5rem;
+}
+
+h1 {
+  font-size: 2.8rem;
+}
+
+h2 {
+  font-size: 2.4rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+h4 {
+  font-size: 1.24rem;
+}
+
+h5 {
+  font-size: 0.95rem;
+}
+
+h6 {
+  font-size: 0.76rem;
+}
+
+@media only screen and (max-width: 720px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+
+  h2 {
+    font-size: 2.1rem;
+  }
+
+  h3 {
+    font-size: 1.75rem;
+  }
+
+  h4 {
+    font-size: 1.25rem;
+  }
 }
 
 p,
@@ -150,11 +182,6 @@ body > footer {
 	color: var(--foreground-muted);
 }
 
-body > header p {
-	margin: 0.5rem 0;
-	line-height: 1.1;
-	font-weight: bolder;
-}
 body > footer p {
 	line-height: 1.1;
 }
@@ -165,9 +192,9 @@ body > footer p:first-child img:hover {
 	transform: scale(1.2);
 }
 
-body > header > nav {
+body > header {
 	display: flex;
-	align-items: center;
+	align-items: flex-end;
 	justify-content: space-between;
 	gap: 1.5rem;
 }
@@ -185,8 +212,8 @@ body > footer {
 	font-size: smaller;
 }
 
-body > header::after,
-body > footer::before {
+body > main::after,
+body > main::before {
 	content: "";
 	left: 0;
 	right: 0;
@@ -195,11 +222,11 @@ body > footer::before {
 	width: 5rem;
 	border-bottom: var(--accent) solid 0.5rem;
 }
-body > header::after {
-	margin-top: 2rem;
+body > main::after {
+	margin-top: 3rem;
 }
-body > footer::before {
-	margin-bottom: 2rem;
+body > main::before {
+	margin-bottom: 3rem;
 }
 
 /* HEADER TITLE */

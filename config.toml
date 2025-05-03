@@ -1,7 +1,6 @@
 base_url = "https://tnychn.github.io"
 
 title = "tnychn"
-description = "My /dev/stdout for the internet."
 author = "Tony Chan (tnychn)"
 
 default_language = "en-HK"

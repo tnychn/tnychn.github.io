@@ -21,7 +21,6 @@
     <header>
       <h1 onclick="window.location.href='/';"><span>{{ config.title }}</span></h1>
       <nav>
-        <p>{{ config.description }}</p>
         <ul>
           {% for navlink in config.extra.navlinks %}
           <li><a href="{{ navlink.path }}">{{ navlink.title }}</a></li>
