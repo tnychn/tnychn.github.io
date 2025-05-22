@@ -1,18 +1,17 @@
-@import url("https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap");
-
 :root {
 	--font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 	--background: #fefefe;
-	--foreground: #212121;
+	--foreground-1: #212121;
+	--foreground-2: #3d3d3d;
 	--accent: #0d47a1;
 }
 
 @media (prefers-color-scheme: dark) {
 	:root {
 		color-scheme: dark;
-		--background: #212121;
-		--foreground: #cccccc;
-		--foreground-muted: #9b9c9d;
+		--background: #111;
+		--foreground-1: #f9f9f9;
+		--foreground-2: #cccccc;
 		--accent: #ffb300;
 	}
 	img.icon {
@@ -41,17 +40,13 @@ ol {
 /* LINKS */
 
 a {
-	opacity: 80%;
 	color: var(--accent);
-	text-underline-offset: 2px;
-	text-decoration: underline solid 0.1em;
+}
+a:visited, a:hover {
+	opacity: 0.8;
 }
 a:visited {
-	text-decoration: underline dashed 0.1em;
-}
-a:hover {
-	opacity: 100%;
-	text-decoration: underline dashed 0.1em;
+	text-decoration: underline dashed;
 }
 
 /* HEADINGS */
@@ -59,17 +54,34 @@ a:hover {
 h1,
 h2,
 h3,
-h4 {
-	cursor: pointer;
+h4,
+h5,
+h6 {
 	position: relative;
 	line-height: 1.1;
 }
 
-h1:hover,
-h2:hover,
-h3:hover,
-h4:hover {
-	text-decoration: underline 3px var(--accent);
+h1::before,
+h2::before,
+h3::before,
+h4::before,
+h5::before,
+h6::before {
+	content: "#";
+	position: absolute;
+	left: -0.75em;
+	color: var(--accent);
+}
+
+@media only screen and (max-width: 720px) {
+	h1::before,
+	h2::before,
+	h3::before,
+	h4::before,
+	h5::before,
+	h6::before {
+		display: none;
+	}
 }
 
 /* TEXTS */
@@ -92,6 +104,7 @@ h3,
 h4,
 h5,
 h6 {
+	color: var(--foreground-1);
 	margin-top: 2rem;
 	margin-bottom: 1.5rem;
 }
@@ -155,10 +168,9 @@ h1 {
 /* LAYOUT */
 
 body {
-	margin: 0;
 	font-size: 1.15rem;
 	line-height: 1.5;
-	color: var(--foreground);
+	color: var(--foreground-2);
 	background-color: var(--background);
 	display: grid;
 	grid-template-columns: 1fr min(45rem, 90%) 1fr;
@@ -179,17 +191,13 @@ body > * {
 body > header,
 body > footer {
 	padding: 2rem 0;
-	color: var(--foreground-muted);
+}
+body > header {
+	padding-bottom: 3rem;
 }
 
 body > footer p {
 	line-height: 1.1;
-}
-body > footer p:first-child img {
-	transition: all 0.2s ease-in-out;
-}
-body > footer p:first-child img:hover {
-	transform: scale(1.2);
 }
 
 body > header {
@@ -205,6 +213,12 @@ body > header > nav > ul {
 }
 body > header > nav > ul > li:not(:last-child) {
 	margin-right: 0.75rem;
+}
+body > header > nav > ul > li > a {
+	color: var(--foreground-1);
+	font-weight: bold;
+	text-decoration-thickness: 2px;
+	text-decoration-color: var(--accent);
 }
 
 body > footer {
@@ -236,12 +250,8 @@ body > header > h1 {
 	display: inline-block;
 	margin-bottom: 0;
 	letter-spacing: -0.1rem;
-	color: var(--foreground);
+	color: var(--foreground-1);
 	cursor: pointer;
-	text-decoration: none;
-}
-body > header > h1:hover {
-	text-decoration: none;
 }
 body > header > h1::before {
 	content: none;
@@ -263,19 +273,10 @@ body > header > h1 > span {
 			#0000 0
 		)
 		bottom / var(--i, 85%) var(--t) no-repeat;
-	padding: 0;
+	padding: 0.3rem 0;
 	box-decoration-break: clone;
 	-webkit-box-decoration-break: clone;
 }
-body > header > h1:hover {
-	transform: scale(1.1);
-}
 body > header > h1:hover > span {
 	--i: 100%;
-	color: black;
-}
-@media (prefers-color-scheme: dark) {
-	body > header > h1:hover > span {
-		color: white;
-	}
 }
