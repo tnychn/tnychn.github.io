@@ -9,12 +9,6 @@
     <title>{{ config.title }}</title>
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="stylesheet" type="text/css" href="/theme.css">
-    <!-- Start Cloudflare Web Analytics -->
-    {% if config.extra.cf_token %}
-    <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
-      data-cf-beacon='{"token": "{{ config.extra.cf_token }}"}'></script>
-    {% endif %}
-    <!-- End Cloudflare Web Analytics -->
   </head>
 
   <body>
@@ -25,27 +19,29 @@
           {% for navlink in config.extra.navlinks %}
           <li><a href="{{ navlink.path }}">{{ navlink.title }}</a></li>
           {% endfor %}
+          {% if config.extra.socials %}
+          <li>
+            {% for social, url in config.extra.socials %}
+            <a href="{{ url }}">
+              <img class="icon" height="100%" width="22" src="https://unpkg.com/simple-icons@v14/icons/{{ social }}.svg" />
+            </a>
+            {% endfor %}
+          </li>
+          <li>
+            {% if config.extra.email %}
+            <a href="mailto:{{ config.extra.email }}">
+              <img class="icon" height="100%" width="22" src="https://unpkg.com/simple-icons@v14/icons/protonmail.svg" />
+            </a>
+            {% endif %}
+          </li>
+          {% endif %}
         </ul>
       </nav>
     </header>
     <main>
-      {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
     </main>
     <footer>
-      {% if config.extra.socials %}
-      <p>
-        {% for social, url in config.extra.socials %}
-        <a href="{{ url }}">
-          <img class="icon" height="24" width="24" src="https://unpkg.com/simple-icons@v14/icons/{{ social }}.svg" />
-        </a>
-        {% endfor %}
-      </p>
-      <p>
-        {% if config.extra.email %}
-        <a href="mailto:{{ config.extra.email }}">{{ config.extra.email }}</a>
-        {% endif %}
-      </p>
-      {% endif %}
       <p>© {{ now() | date(format="%Y") }} {{ config.author }}</p>
       <p>Powered by <a href="https://www.getzola.org/">Zola</a> with Custom Theme</p>
     </footer>
